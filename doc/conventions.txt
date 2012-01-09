@@ -1,0 +1,5 @@
+Model definition
+================
+
+- Each model must have a defined primary key
+- Each column must have a type annotation: @type

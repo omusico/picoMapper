@@ -65,12 +65,12 @@ class Query {
         );
 
         $sql .= $this->jointures;
-        if ($this->where) $sql .= $this->builder->addWhere($this->where);
-        
-        if ($this->offset) {
 
-            $sql .= $this->builder->addOffset();
-            $this->parameters[] = $this->offset;
+        if ($this->where) $sql .= $this->builder->addWhere($this->where);
+
+        if ($this->orderCol && $this->orderDir) {
+
+            $sql .= $this->builder->addOrder($this->orderCol, $this->orderDir);
         }
 
         if ($this->limit) {
@@ -79,25 +79,29 @@ class Query {
             $this->parameters[] = $this->limit;
         }
 
+        if ($this->offset) {
+
+            $sql .= $this->builder->addOffset();
+            $this->parameters[] = $this->offset;
+        }
+
         $db = Database::getInstance();
 
         $rq = $db->prepare($sql);
         $rq->execute($this->parameters);
         $rows = $rq->fetchAll(\PDO::FETCH_ASSOC);
+        
+        $results = new Collection();
 
         if ($rows) {
-
-            $results = new Collection();
 
             foreach ($rows as $row) {
 
                 $results[] = ResultSet::convert($this->model, $row);
             }
-
-            return $results;
         }
 
-        return null;
+        return $results;
     }
 
 
@@ -109,9 +113,23 @@ class Query {
             $this->metadata->getColumns()
         );
 
+        $sql .= $this->jointures;
+
         if ($this->where) $sql .= $this->builder->addWhere($this->where);
+
+        if ($this->orderCol && $this->orderDir) {
+
+            $sql .= $this->builder->addOrder($this->orderCol, $this->orderDir);
+        }
+
         $sql .= $this->builder->addLimit();
         $this->parameters[] = 1;
+
+        if ($this->offset) {
+
+            $sql .= $this->builder->addOffset();
+            $this->parameters[] = $this->offset;
+        }
         
         $db = Database::getInstance();
 
@@ -137,13 +155,26 @@ class Query {
 
         $metadata = MetadataStorage::get($model);
 
-        $this->jointures .= $this->builder->addJoin(
-            $this->metadata->getModelName(),
-            $this->metadata->getForeignKey($model),
-            $metadata->getTable(),
-            $metadata->getModelName(),
-            $metadata->getPrimaryKey()
-        );
+        if ($this->metadata->isBelongsToRelation($model)) {
+
+            $this->jointures .= $this->builder->addJoin(
+                $this->metadata->getModelName(),
+                $this->metadata->getForeignKey($model),
+                $metadata->getTable(),
+                $metadata->getModelName(),
+                $metadata->getPrimaryKey()
+            );
+        }
+        else {
+
+            $this->jointures .= $this->builder->addJoin(
+                $this->metadata->getModelName(),
+                $this->metadata->getPrimaryKey(),
+                $metadata->getTable(),
+                $metadata->getModelName(),
+                $metadata->getForeignKey($this->metadata->getModelName())
+            );
+        }
 
         return $this;
     }
@@ -182,6 +213,15 @@ class Query {
 
         $this->orderCol = $name;
         $this->orderDir = 'ASC';
+
+        return $this;
+    }
+
+
+    public function desc($name) {
+
+        $this->orderCol = $name;
+        $this->orderDir = 'DESC';
 
         return $this;
     }

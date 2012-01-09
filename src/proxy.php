@@ -45,12 +45,12 @@ class RelationProxy implements \ArrayAccess, \Iterator {
                 $originMeta = MetadataStorage::get($this->originModel);
                 $relationMeta = MetadataStorage::get($this->relationModel);
 
-                $primaryKeyName = $relationMeta->getPrimaryKey();
-                $primaryKeyValue = $this->modelInstance->{$originMeta->getPrimaryKey()};
+                $keyName = $relationMeta->getForeignKey($this->originModel);
+                $keyValue = $this->modelInstance->{$originMeta->getPrimaryKey()};
 
                 $className = $this->relationModel;
                 $this->instance = $className::Query()
-                    ->where($this->relationModel.'.'.$primaryKeyName.' = ?', $primaryKeyValue)
+                    ->where($this->relationModel.'.'.$keyName.' = ?', $keyValue)
                     ->fetchOne();
             }
             else if ($this->relationType === 'hasMany') {
@@ -58,12 +58,12 @@ class RelationProxy implements \ArrayAccess, \Iterator {
                 $originMeta = MetadataStorage::get($this->originModel);
                 $relationMeta = MetadataStorage::get($this->relationModel);
 
-                $primaryKeyName = $relationMeta->getPrimaryKey();
-                $primaryKeyValue = $this->modelInstance->{$originMeta->getPrimaryKey()};
+                $keyName = $relationMeta->getForeignKey($this->originModel);
+                $keyValue = $this->modelInstance->{$originMeta->getPrimaryKey()};
 
                 $className = $this->relationModel;
                 $this->instance = $className::Query()
-                    ->where($this->relationModel.'.'.$primaryKeyName.' = ?', $primaryKeyValue)
+                    ->where($this->relationModel.'.'.$keyName.' = ?', $keyValue)
                     ->fetchAll();
             }
         }

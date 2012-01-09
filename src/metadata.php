@@ -129,6 +129,19 @@ class Metadata {
     }
 
 
+    public function isBelongsToRelation($model) {
+
+        $relations = $this->getBelongsToRelations();
+
+        if (! empty($relations)) {
+
+            if (in_array($model, $relations)) return true;
+        }
+
+        return false;
+    }
+
+
     public function getBelongsToRelations() {
 
         if (empty($this->belongsToRelations) && isset($this->metadata['properties'])) {

@@ -130,6 +130,7 @@ class CustomerAddress extends \picoMapper\Model {
      */
     public $name;
 
+
     /**
      * @type string
      */

@@ -88,14 +88,15 @@ class Model {
 
     final public static function __callStatic($name, $arguments) {
 
-        if ($name === 'Query') {
+        $name = strtolower($name);
+
+        if ($name === 'query' || $name === 'find') {
 
             return new Query(get_called_class());
         }
         else if (substr($name, 0, 4) == 'find') {
 
             $query = new Query(get_called_class());
-            $name = strtolower($name);
 
             if (substr($name, 4, 7) == 'all') {
 
@@ -154,28 +155,36 @@ class Model {
 
         try {
 
-            if ($this->$primaryKey) {
+            $values = $this->getValues();
 
-                $sql = $builder->update(
-                    $this->metadata->getTable(),
-                    $this->metadata->getColumns(),
-                    $primaryKey
-                );
+            if (count($values) > 1) {
 
-                $rq = $db->prepare($sql);
-                $rq->execute($this->getValues()); 
-            }
-            else {
+                if ($this->$primaryKey) {
 
-                $sql = $builder->insert(
-                    $this->metadata->getTable(),
-                    $this->metadata->getColumns()
-                );
+                    $sql = $builder->update(
+                        $this->metadata->getTable(),
+                        $this->metadata->getColumns(),
+                        $primaryKey
+                    );
 
-                $rq = $db->prepare($sql);
-                $rq->execute($this->getValues());
+                    $rq = $db->prepare($sql);
 
-                $this->$primaryKey = $db->lastInsertId();
+                    $values[] = $this->$primaryKey;
+
+                    $rq->execute($values); 
+                }
+                else {
+
+                    $sql = $builder->insert(
+                        $this->metadata->getTable(),
+                        $this->metadata->getColumns()
+                    );
+
+                    $rq = $db->prepare($sql);
+                    $rq->execute($values);
+
+                    $this->$primaryKey = $db->lastInsertId();
+                }
             }
         }
         catch (\PDOException $e) {

@@ -193,6 +193,15 @@ class ModelTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $v->count());
         $this->assertEquals(2, $v[0]->id);
 
+        $v = Model2::find()
+            ->where('Model2.id < ?', 3)
+            ->limit(1)
+            ->offset(1)
+            ->asc('id')
+            ->fetchAll();
+
+        $this->assertEquals(1, $v->count());
+        $this->assertEquals(2, $v[0]->id);
     }
 }
 

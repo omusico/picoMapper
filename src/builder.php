@@ -141,6 +141,12 @@ abstract class SqlBuilder {
 
         return sprintf(' WHERE %s', $where);
     }
+
+
+    public function addOrder($column, $direction = 'ASC') {
+
+        return sprintf(' ORDER BY %s %s', $column, $direction);
+    }
 }
 
 
