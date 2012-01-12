@@ -12,7 +12,6 @@ class Database {
     private static $user = null;
     private static $password = null;
     private static $pdo = null;
-    private static $schemaAutoUpdate = true;
 
 
     public static function config($dsn, $user = null, $password = null) {
@@ -20,12 +19,6 @@ class Database {
         self::$dsn = $dsn;
         self::$user = $user;
         self::$password = $password;
-    }
-
-
-    public static function disableSchemaAutoUpdate() {
-
-        self::$schemaAutoUpdate = false;
     }
 
 
@@ -45,11 +38,6 @@ class Database {
 
             self::$pdo = new \PDO(self::$dsn, self::$user, self::$password);
             self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
-            if (self::$schemaAutoUpdate) {
-
-                Schema::update();
-            }
         }
 
         return self::$pdo;

@@ -28,8 +28,6 @@ class DatabaseTest extends PHPUnit_Framework_TestCase {
 
     public function testGetInstance() {
 
-        \picoMapper\Database::disableSchemaAutoUpdate();
-
         $db = \picoMapper\Database::getInstance();
 
         $this->assertInstanceOf('PDO', $db);

@@ -16,7 +16,7 @@ Features
 - Relations: has one, has many, belongs to
 - Lightweight: relations are loaded only if necessary (lazy loading)
 - Data validation
-- Automatic schema migration
+- Migrations
 - Tested: almost everything have a unit test
 
 Documentation

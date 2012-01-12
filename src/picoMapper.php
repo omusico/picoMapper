@@ -11,6 +11,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'collection.php';
 require __DIR__.DIRECTORY_SEPARATOR.'proxy.php';
 require __DIR__.DIRECTORY_SEPARATOR.'schema.php';
 require __DIR__.DIRECTORY_SEPARATOR.'resultset.php';
+require __DIR__.DIRECTORY_SEPARATOR.'migration.php';
 require __DIR__.DIRECTORY_SEPARATOR.'validator.php';
 
 require __DIR__.DIRECTORY_SEPARATOR.'validators'.DIRECTORY_SEPARATOR.'datetime.php';

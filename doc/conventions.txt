@@ -3,3 +3,7 @@ Model definition
 
 - Each model must have a defined primary key
 - Each column must have a type annotation: @type
+- default charset is utf8
+- if schema auto-update is used, a table named schema_version is created inside the database
+- Primary key and foreign key are integer
+

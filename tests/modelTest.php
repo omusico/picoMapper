@@ -38,7 +38,6 @@ class ModelTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
 
-        \picoMapper\Database::disableSchemaAutoUpdate();
         \picoMapper\Database::config('sqlite::memory:');
 
         $builder = \picoMapper\Builder::create();

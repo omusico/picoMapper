@@ -146,7 +146,7 @@ class Model {
         foreach ($this->metadata->getBelongsToRelations() as $property => $model) {
 
             if ($this->$property) {
-                
+
                 $metadata = MetadataStorage::get($model);
                 $value = $this->$property->{$metadata->getPrimaryKey()};
                 $this->{$this->metadata->getForeignKey($model)} = $value;

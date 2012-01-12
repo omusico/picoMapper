@@ -23,7 +23,6 @@ class UniqueValidatorTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
 
-        \picoMapper\Database::disableSchemaAutoUpdate();
         \picoMapper\Database::config('sqlite::memory:');
 
         $sql = \picoMapper\Builder::create()->createTable(
