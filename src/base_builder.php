@@ -8,6 +8,7 @@ namespace picoMapper;
  *
  * Generate SQL to use inside a prepared statement
  *
+ * @author Frédéric Guillot
  */
 abstract class BaseBuilder {
 

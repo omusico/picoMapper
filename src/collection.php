@@ -3,6 +3,13 @@
 namespace picoMapper;
 
 
+/**
+ * A collection contain a list of model instances
+ *
+ * A collection of models is returned after a query
+ *
+ * @author Frédéric Guillot
+ */
 class Collection implements \ArrayAccess, \Iterator {
 
     private $position = 0;
