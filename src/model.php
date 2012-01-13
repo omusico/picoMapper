@@ -71,17 +71,17 @@ class Model {
 
         foreach ($this->metadata->getBelongsToRelations() as $property => $model) {
 
-            $this->$property = new RelationProxy(get_called_class(), $model, 'belongsTo', $this);
+            $this->$property = new ModelProxy(get_called_class(), $model, 'belongsTo', $this);
         }
 
         foreach ($this->metadata->getHasOneRelations() as $property => $model) {
 
-            $this->$property = new RelationProxy(get_called_class(), $model, 'hasOne', $this);
+            $this->$property = new ModelProxy(get_called_class(), $model, 'hasOne', $this);
         }
 
         foreach ($this->metadata->getHasManyRelations() as $property => $model) {
 
-            $this->$property = new RelationProxy(get_called_class(), $model, 'hasMany', $this);
+            $this->$property = new CollectionProxy(get_called_class(), $model, $this);
         }
     }
 
