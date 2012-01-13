@@ -14,13 +14,13 @@ class Schema {
     public function __construct() {
 
         $this->db = Database::getInstance();
-        $this->builder = Builder::create();
+        $this->builder = BuilderFactory::getInstance();
     }
 
 
     public function createVersionTable() {
 
-        $sql = $this->builder->createTable(
+        $sql = $this->builder->addTable(
             'schema_version',
             array('version' => 'string')
         );

@@ -3,12 +3,12 @@
 require_once 'src/picoMapper.php';
 
 
-class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
+class PostgresBuilderTest extends PHPUnit_Framework_TestCase {
 
 
     public function testIdentifierEscaping() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
         $sql = $builder->escapeIdentifier('blabla');
 
         $this->assertEquals('"blabla"', $sql);
@@ -17,7 +17,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testInsert() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
         $sql = $builder->insert('blabla', array('truc', 'bidule'));
 
         $this->assertEquals('INSERT INTO "blabla" ("truc", "bidule") VALUES (?, ?)', $sql);
@@ -26,7 +26,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testUpdate() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
         $sql = $builder->update('blabla', array('truc', 'bidule'), 'titi');
 
         $this->assertEquals('UPDATE "blabla" SET "truc"=?, "bidule"=? WHERE "titi"=?', $sql);
@@ -35,26 +35,26 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testColumnType() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
-        $this->assertEquals('"toto" INTEGER PRIMARY KEY', $builder->columnType('toto', 'primaryKey')); 
+        $this->assertEquals('"toto" SERIAL PRIMARY KEY', $builder->columnType('toto', 'primaryKey')); 
         $this->assertEquals('"toto" INTEGER', $builder->columnType('toto', 'integer')); 
-        $this->assertEquals('"toto" INTEGER', $builder->columnType('toto', 'boolean')); 
-        $this->assertEquals('"toto" TEXT', $builder->columnType('toto', 'string')); 
+        $this->assertEquals('"toto" BOOLEAN', $builder->columnType('toto', 'boolean')); 
+        $this->assertEquals('"toto" VARCHAR(255)', $builder->columnType('toto', 'string')); 
         $this->assertEquals('"toto" TEXT', $builder->columnType('toto', 'text')); 
-        $this->assertEquals('"toto" NUMERIC', $builder->columnType('toto', 'numeric')); 
-        $this->assertEquals('"toto" NUMERIC', $builder->columnType('toto', 'decimal')); 
+        $this->assertEquals('"toto" DECIMAL(10,2)', $builder->columnType('toto', 'numeric')); 
+        $this->assertEquals('"toto" DECIMAL(10,2)', $builder->columnType('toto', 'decimal')); 
         $this->assertEquals('"toto" REAL', $builder->columnType('toto', 'float')); 
-        $this->assertEquals('"toto" BLOB', $builder->columnType('toto', 'binary')); 
-        $this->assertEquals('"toto" TEXT', $builder->columnType('toto', 'date')); 
-        $this->assertEquals('"toto" TEXT', $builder->columnType('toto', 'datetime')); 
-        $this->assertEquals('"toto" TEXT', $builder->columnType('toto', 'time')); 
+        $this->assertEquals('"toto" BYTEA', $builder->columnType('toto', 'binary')); 
+        $this->assertEquals('"toto" DATE', $builder->columnType('toto', 'date')); 
+        $this->assertEquals('"toto" TIMESTAMP', $builder->columnType('toto', 'datetime')); 
+        $this->assertEquals('"toto" TIME', $builder->columnType('toto', 'time')); 
     }
 
 
     public function testCreateTable() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $sql = $builder->addTable('blabla', array(
             'cA' => 'primaryKey',
@@ -63,7 +63,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
         ));
 
         $this->assertEquals(
-            'CREATE TABLE IF NOT EXISTS "blabla" ("cA" INTEGER PRIMARY KEY, "cB" TEXT, "cC" NUMERIC)',
+            'CREATE TABLE IF NOT EXISTS "blabla" ("cA" SERIAL PRIMARY KEY, "cB" TEXT, "cC" DECIMAL(10,2))',
             $sql
         );
     }
@@ -71,7 +71,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testDropTable() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals('DROP TABLE "toto"', $builder->dropTable('toto'));
     }
@@ -79,7 +79,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testForeignKey() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(
             'REFERENCES "toto"("bla_id")',
@@ -105,7 +105,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testCreateTableWithForeignKeys() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $sql = $builder->addTable('blabla', array(
                 'cA' => 'primaryKey',
@@ -119,7 +119,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
         );
 
         $this->assertEquals(
-            'CREATE TABLE IF NOT EXISTS "blabla" ("cA" INTEGER PRIMARY KEY, "cB" TEXT, "cC" NUMERIC, "b_id" INTEGER REFERENCES "tableB"("bid"), "c_id" INTEGER REFERENCES "tableC"("cid") ON DELETE CASCADE)',
+            'CREATE TABLE IF NOT EXISTS "blabla" ("cA" SERIAL PRIMARY KEY, "cB" TEXT, "cC" DECIMAL(10,2), "b_id" INTEGER REFERENCES "tableB"("bid"), "c_id" INTEGER REFERENCES "tableC"("cid") ON DELETE CASCADE)',
             $sql
         );
     }
@@ -127,7 +127,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testSelectTable() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $sql = $builder->select('titi', 'toto');
         $this->assertEquals('SELECT * FROM "titi" AS "toto"', $sql);
@@ -139,7 +139,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testAddJoin() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $sql = $builder->addJoin('ModelA', 'KeyA', 'TableB', 'ModelB', 'KeyB');
         $this->assertEquals(' LEFT JOIN "TableB" AS "ModelB" ON "ModelA"."KeyA" = "ModelB"."KeyB"', $sql);
@@ -148,7 +148,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testCount() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals('SELECT COUNT(*) FROM "toto" AS "Toto"', $builder->count('toto', 'Toto'));
     }
@@ -156,7 +156,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testLimit() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(' LIMIT ?', $builder->addLimit());
     }
@@ -164,7 +164,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testOffset() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(' OFFSET ?', $builder->addOffset());
     }
@@ -172,7 +172,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testAddColumn() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(
             'ALTER TABLE "toto" ADD COLUMN "titi" INTEGER',
@@ -183,10 +183,10 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testDropColumn() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(
-            '',
+            'ALTER TABLE "toto" DROP COLUMN "titi"',
             $builder->dropColumn('toto', 'titi')
         );
     }
@@ -194,7 +194,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testWhere() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(' WHERE test', $builder->addWhere('test'));
     }
@@ -202,7 +202,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testOrder() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(' ORDER BY "toto" ASC', $builder->addOrder('toto'));
         $this->assertEquals(' ORDER BY "toto" ASC', $builder->addOrder('toto', 'ASC'));
@@ -213,7 +213,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testAddIndex() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(
             'CREATE INDEX "toto" ON "tableA"("columnA")',
@@ -224,7 +224,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testAddUniqueIndex() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(
             'CREATE UNIQUE INDEX "toto" ON "tableA"("columnA")',
@@ -240,7 +240,7 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testDropIndex() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\PostgresBuilder();
 
         $this->assertEquals(
             'DROP INDEX "toto"',

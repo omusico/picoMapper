@@ -11,7 +11,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
      */
     public function testUnknown() {
 
-        \picoMapper\Builder::create('blabla');
+        \picoMapper\BuilderFactory::getInstance('blabla');
     }
 
 
@@ -22,7 +22,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
     public function testUnkownFromDriver() {
 
         \picoMapper\Database::config('');
-        \picoMapper\Builder::create();
+        \picoMapper\BuilderFactory::getInstance();
     }
 
 
@@ -30,28 +30,28 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
 
         \picoMapper\Database::config('sqlite::memory:');
 
-        $r = \picoMapper\Builder::create();
+        $r = \picoMapper\BuilderFactory::getInstance();
         $this->assertInstanceOf('\picoMapper\SqliteBuilder', $r);
     }
     
     
     public function testInstanceofSqlite() {
 
-        $r = \picoMapper\Builder::create('sqlite');
+        $r = \picoMapper\BuilderFactory::getInstance('sqlite');
         $this->assertInstanceOf('\picoMapper\SqliteBuilder', $r);
     }
 
 
     public function testInstanceofPg() {
 
-        $r = \picoMapper\Builder::create('postgres');
+        $r = \picoMapper\BuilderFactory::getInstance('postgres');
         $this->assertInstanceOf('\picoMapper\PostgresBuilder', $r);
     }
 
 
     public function testInstanceofMysql() {
 
-        $r = \picoMapper\Builder::create('mysql');
+        $r = \picoMapper\BuilderFactory::getInstance('mysql');
         $this->assertInstanceOf('\picoMapper\MysqlBuilder', $r);
     }
 }

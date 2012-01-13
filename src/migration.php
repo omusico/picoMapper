@@ -12,7 +12,7 @@ class Migration {
 
     public function __construct() {
 
-        $this->builder = Builder::create();
+        $this->builder = BuilderFactory::getInstance();
         $this->db = Database::getInstance();
     }
 
@@ -44,24 +44,36 @@ class Migration {
 
             $this->db->rollback();
 
-            throw new DatabaseException('Unable to execute this migration: "'.get_called_class().'"');
+            throw new DatabaseException(sprintf(
+                'Unable to execute this migration: "%s" (%s)',
+                get_called_class(),
+                $e->getMessage()
+            ));
         }
     }
 
 
     public function addTable($table, array $columns, array $foreignKeys = array()) {
 
-        $this->sql[] = $this->builder->createTable($table, $columns, $foreignKeys);
+        $this->sql[] = $this->builder->addTable($table, $columns, $foreignKeys);
     }
 
 
     public function addColumn($table, $column, $type) {
 
+        $this->sql[] = $this->builder->addColumn(
+            $table,
+            $column,
+            $type);
     }
 
 
     public function addIndex($table, $column) {
 
+        $this->sql[] = $this->builder->addIndex(
+            $column.'_idx',
+            $table,
+            $column);
     }
 
 

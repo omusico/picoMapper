@@ -40,11 +40,11 @@ class ModelTest extends PHPUnit_Framework_TestCase {
 
         \picoMapper\Database::config('sqlite::memory:');
 
-        $builder = \picoMapper\Builder::create();
+        $builder = \picoMapper\BuilderFactory::getInstance();
 
         for ($i = 1; $i <= 2; $i++) {
 
-            $sql = $builder->createTable('model'.$i, array('id' => 'primaryKey', 'data' => 'string'));
+            $sql = $builder->addTable('model'.$i, array('id' => 'primaryKey', 'data' => 'string'));
             \picoMapper\Database::getInstance()->exec($sql);
         }
     }

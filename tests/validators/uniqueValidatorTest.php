@@ -25,7 +25,7 @@ class UniqueValidatorTest extends PHPUnit_Framework_TestCase {
 
         \picoMapper\Database::config('sqlite::memory:');
 
-        $sql = \picoMapper\Builder::create()->createTable(
+        $sql = \picoMapper\BuilderFactory::getInstance()->addTable(
             'uniquemodel',
             array('id' => 'primaryKey', 'name' => 'string')
         );

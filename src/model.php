@@ -140,7 +140,7 @@ class Model {
         }
 
         $db = Database::getInstance();
-        $builder = Builder::create();
+        $builder = BuilderFactory::getInstance();
         $primaryKey = $this->metadata->getPrimaryKey();
 
         foreach ($this->metadata->getBelongsToRelations() as $property => $model) {

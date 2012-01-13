@@ -24,7 +24,7 @@ class Query {
     public function __construct($model) {
 
         $this->model = $model;
-        $this->builder = Builder::create();
+        $this->builder = BuilderFactory::getInstance();
         $this->metadata = MetadataStorage::get($this->model);
 
         return $this;

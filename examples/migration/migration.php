@@ -2,7 +2,9 @@
 
 require '../../src/picoMapper.php';
 
-\picoMapper\Database::config('sqlite::memory:');
+\picoMapper\Database::config('mysql:host=localhost;dbname=picomapper', 'root', '');
+//\picoMapper\Database::config('sqlite::memory:');
+
 \picoMapper\Schema::update();
 
 
