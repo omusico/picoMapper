@@ -225,11 +225,53 @@ class Metadata {
 
             foreach ($this->metadata['properties'] as $name => $settings) {
 
-                if (isset($settings['type'])) {
+                if (! isset($this->rules[$name])) {
 
+                    $this->rules[$name] = array();
                 }
-                else if (isset($settings['foreignKey'])) {
 
+                if (isset($settings['rule'])) {
+
+                    if (is_array($settings['rule'])) {
+
+                        foreach ($settings['rule'] as $key => $value) {
+
+                            if (is_array($value)) {
+
+                                $rule = $key;
+                            }
+                            else {
+
+                                $rule = $value;
+                                $value = array();
+                            }
+
+                            switch ($rule) {
+
+                                case '>=':
+                                    $rule = 'greaterThanOrEqual';
+                                    break;
+
+                                case '<=':
+                                    $rule = 'lessThanOrEqual';
+                                    break;
+
+                                case '>':
+                                    $rule = 'greaterThan';
+                                    break;
+
+                                case '<':
+                                    $rule = 'lessThan';
+                                    break;
+                            }
+
+                            $this->rules[$name][$rule] = $value;
+                        }
+                    }
+                    else {
+
+                        $this->rules[$name][$settings['rule']] = array();
+                    }
                 }
             }
         }

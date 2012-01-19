@@ -35,33 +35,14 @@ class Validator {
 
             foreach ($rules as $rule => $args) {
 
-                switch ($rule) {
-
-                    case '>=':
-                        $rule = 'greaterThanOrEqual';
-                        break;
-
-                    case '<=':
-                        $rule = 'lessThanOrEqual';
-                        break;
-
-                    case '>':
-                        $rule = 'greaterThan';
-                        break;
-
-                    case '<':
-                        $rule = 'lessThan';
-                        break;
-                }
-
                 $className = '\picoMapper\Validators\\'.$rule.'Validator';
                 $validator = new $className();
-                
+
                 $rs[] = $validator->execute($this->modelInstance, $column, $args);
             }
         }
 
-        return ! in_array(false, $rs);
+        return ! in_array(false, $rs, true);
     }
 }
 
