@@ -9,7 +9,7 @@ class ModelException extends \Exception {};
 class Model {
 
     private $metadata = null;
-    public $validationErrors = array();
+    protected $validationErrors = array();
 
 
     public function __construct($data = array()) {
@@ -264,6 +264,12 @@ class Model {
         }
 
         return $data;
+    }
+
+
+    final public function getValidationErrors() {
+
+        return $this->validationErrors;
     }
 }
 
