@@ -9,7 +9,8 @@ class ModelException extends \Exception {};
 class Model {
 
     private $metadata = null;
-    protected $validationErrors = array();
+    protected $validatorErrors = array();
+    protected $validatorMessages = array();
 
 
     public function __construct($data = array()) {
@@ -58,12 +59,12 @@ class Model {
 
     final public function addError($column, $message) {
 
-        if (! isset($this->validationErrors[$column])) {
+        if (! isset($this->validatorErrors[$column])) {
 
-            $this->validationErrors[$column] = array();
+            $this->validatorErrors[$column] = array();
         }
 
-        $this->validationErrors[$column][] = $message;
+        $this->validatorErrors[$column][] = $message;
     }
 
 
@@ -134,6 +135,8 @@ class Model {
 
     final public function save() {
 
+        $this->beforeSave();
+
         if ($this->validate() === false) {
 
             throw new ValidatorException('Validation error');
@@ -191,6 +194,8 @@ class Model {
 
             throw new DatabaseException($e->getMessage());
         }
+
+        $this->afterSave();
     }
 
 
@@ -249,8 +254,14 @@ class Model {
 
     final public function validate() {
 
-        $v = new Validator($this->metadata->getModelName(), $this);
-        return $v->execute();
+        $this->beforeValidate();
+
+        $v = new Validator($this->metadata->getModelName(), $this, $this->validatorMessages);
+        $rs = $v->execute();
+
+        $this->afterValidate();
+
+        return $rs;
     }
 
 
@@ -267,9 +278,29 @@ class Model {
     }
 
 
-    final public function getValidationErrors() {
+    final public function getValidatorErrors() {
 
-        return $this->validationErrors;
+        return $this->validatorErrors;
+    }
+
+
+    public function beforeValidate() {
+
+    }
+
+
+    public function afterValidate() {
+
+    }
+
+
+    public function beforeSave() {
+
+    }
+
+
+    public function afterSave() {
+
     }
 }
 

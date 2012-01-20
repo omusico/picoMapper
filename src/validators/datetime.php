@@ -2,9 +2,21 @@
 
 namespace picoMapper\Validators;
 
-class DatetimeValidator implements \picoMapper\IValidator {
 
-    private $defaultErrorMessage = 'This date must follow this format %s';
+/**
+ * Datetime validator
+ *
+ * @author Frédéric Guillot
+ */
+class DatetimeValidator extends \picoMapper\BaseValidator {
+
+    /**
+     * Default error message
+     *
+     * @access protected
+     * @var string
+     */
+    protected $defaultMessage = 'This date must follow this format %s';
 
     
     public function execute(&$modelInstance, $column, $args = array()) {
@@ -19,7 +31,7 @@ class DatetimeValidator implements \picoMapper\IValidator {
         if (isset($modelInstance->$column) && 
             date_create_from_format($args[0], $modelInstance->$column) === false) {
 
-            $modelInstance->addError($column, sprintf($this->defaultErrorMessage, $args[0]));
+            $modelInstance->addError($column, sprintf($this->getMessage(), $args[0]));
 
             return false;
         }

@@ -2,11 +2,32 @@
 
 namespace picoMapper\Validators;
 
-class UniqueValidator implements \picoMapper\IValidator {
 
-    private $defaultErrorMessage = 'This field must be unique';
+/**
+ * Unique field validator
+ *
+ * @author Frédéric Guillot
+ */
+class UniqueValidator extends \picoMapper\BaseValidator {
+
+    /**
+     * Default error message
+     *
+     * @access protected
+     * @var string
+     */
+    protected $defaultMessage = 'This field must be unique';
 
 
+    /**
+     * Execute the validator
+     *
+     * @access public
+     * @param \picoMapper\Model $modelInstance Model instance
+     * @param string $column Column name to validate
+     * @param array $args Validator parameters
+     * @return boolean True if the validation is ok
+     */
     public function execute(&$modelInstance, $column, $args = array()) {
 
         $method = 'countBy'.$column;
@@ -14,7 +35,7 @@ class UniqueValidator implements \picoMapper\IValidator {
 
         if ($rs >= 1) {
 
-            $modelInstance->addError($column, $this->defaultErrorMessage);
+            $modelInstance->addError($column, $this->getMessage());
             return false;
         }
 
