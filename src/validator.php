@@ -139,13 +139,30 @@ class Validator {
 
         $metadata = MetadataStorage::get($this->modelName);
         $columns_rules = $metadata->getColumnsRules();
-        $rs = array();
+        $results = array();
+        $directories = array(
+            getcwd().DIRECTORY_SEPARATOR.'validators',
+            __DIR__.DIRECTORY_SEPARATOR.'validators'
+        );
 
         foreach ($columns_rules as $column => $rules) {
 
             foreach ($rules as $rule => $args) {
 
-                $className = '\picoMapper\Validators\\'.$rule.'Validator';
+                $className = __NAMESPACE__.'\Validators\\'.$rule.'Validator';
+
+                if (! class_exists($className)) {
+
+                    foreach ($directories as $directory) {
+
+                        $filename = $directory.DIRECTORY_SEPARATOR.$rule.'.php';
+
+                        if (file_exists($filename)) {
+
+                            require $filename;
+                        }
+                    }
+                }
 
                 if (isset($this->modelMessages[$rule])) {
 
@@ -156,11 +173,15 @@ class Validator {
                     $validator = new $className();
                 }
 
-                $rs[] = $validator->execute($this->modelInstance, $column, $args);
+                $result = $validator->execute($this->modelInstance, $column, $args);
+
+                $results[] = $result;
+
+                if ($result === false) break;
             }
         }
 
-        return ! in_array(false, $rs, true);
+        return ! in_array(false, $results, true);
     }
 }
 
