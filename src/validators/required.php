@@ -9,7 +9,9 @@ class RequiredValidator implements \picoMapper\IValidator {
 
     public function execute(&$modelInstance, $column, $args = array()) {
 
-        if (! isset($modelInstance->$column) || $modelInstance->$column === null) {
+        if (! isset($modelInstance->$column) ||
+            $modelInstance->$column === null ||
+            $modelInstance->$column === '') {
 
             $modelInstance->addError($column, $this->defaultErrorMessage);
 
