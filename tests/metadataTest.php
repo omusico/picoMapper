@@ -124,5 +124,277 @@ class MetadataTest extends PHPUnit_Framework_TestCase {
         
         $this->assertEquals(array('toto', 'bibi'), $m->getColumns());
     }
+
+
+    public function testIsBelongsTo() {
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb' => array(
+                    'belongsTo' => 'ModelB'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertTrue($m->isBelongsToRelation('ModelB'));
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb' => array(
+                    'belongsTo' => 'ModelC'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertFalse($m->isBelongsToRelation('ModelB'));
+    }
+
+
+    public function testGetBelongsToRelations() {
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb' => array(
+                    'belongsTo' => 'ModelB'
+                ),
+                'modela' => array(
+                    'belongsTo' => 'ModelA'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertEquals(array('modelb' => 'ModelB', 'modela' => 'ModelA'), $m->getBelongsToRelations());
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb' => array(
+                    'hasOne' => 'ModelB'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertEquals(array(), $m->getBelongsToRelations());
+    }
+
+
+    public function testGetHasOneToRelations() {
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb' => array(
+                    'hasOne' => 'ModelB'
+                ),
+                'modela' => array(
+                    'hasone' => 'ModelA'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertEquals(array('modelb' => 'ModelB'), $m->getHasOneRelations());
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb' => array(
+                    'hasMany' => 'ModelB'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertEquals(array(), $m->getHasOneRelations());
+    }
+
+
+    public function testGetHasManyRelations() {
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb' => array(
+                    'hasMany' => 'ModelB'
+                ),
+                'modela' => array(
+                    'hasMany' => 'ModelA'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertEquals(array('modelb' => 'ModelB', 'modela' => 'ModelA'), $m->getHasManyRelations());
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb' => array(
+                    'hasOne' => 'ModelB'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertEquals(array(), $m->getHasManyRelations());
+    }
+
+
+    public function testGetForeignKeys() {
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb_id' => array(
+                    'foreignKey' => 'ModelB'
+                ),
+                'modela_id' => array(
+                    'foreignKey' => 'ModelA'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertEquals(array('ModelB' => 'modelb_id', 'ModelA' => 'modela_id'), $m->getForeignKeys());
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb' => array(
+                    'hasOne' => 'ModelB'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertEquals(array(), $m->getForeignKeys());
+    }
+
+
+    public function testGetForeignKey() {
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'modelb_id' => array(
+                    'foreignKey' => 'ModelB'
+                ),
+                'modela_id' => array(
+                    'foreignKey' => 'ModelA'
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+        
+        $this->assertEquals('modelb_id', $m->getForeignKey('ModelB'));
+        $this->assertEquals('modelc_id', $m->getForeignKey('ModelC'));
+    }
+
+
+    public function testGetColumnsRules() {
+
+        $metadata = array(
+            'class' => 'Invoice',
+            'table' => 'invoices',
+            'properties' => array(
+                'toto' => array(
+                    'type' => 'primaryKey'
+                ),
+                'field1' => array(
+                    'rule' => 'rule1'
+                ),
+                'field2' => array(
+                    'rule' => array(
+                        'rule1',
+                        '>' => array(1),
+                        '<' => array(1.5),
+                        '>=' => array(2),
+                        '<=' => array(3),
+                        'rule3' => array(3, 4)
+                    )
+                )
+             )
+        );
+
+        $m = new \picoMapper\Metadata($metadata);
+
+        $this->assertEquals(array(
+                'toto' => array(),
+                'field1' => array('rule1' => array()),
+                'field2' => array(
+                    'rule1' => array(),
+                    'greaterThan' => array(1),
+                    'lessThan' => array(1.5),
+                    'greaterThanOrEqual' => array(2),
+                    'lessThanOrEqual' => array(3),
+                    'rule3' => array(3, 4)                    
+                )
+            ),
+            $m->getColumnsRules()
+        );
+    }
+
 }
 
