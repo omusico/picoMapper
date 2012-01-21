@@ -28,8 +28,10 @@ class DatabaseTest extends PHPUnit_Framework_TestCase {
 
     public function testGetInstance() {
 
+        \picoMapper\Database::config('sqlite::memory:');
         $db = \picoMapper\Database::getInstance();
 
         $this->assertInstanceOf('PDO', $db);
     }
+
 }
