@@ -2,30 +2,138 @@
 
 namespace picoMapper;
 
+
+/**
+ * Metadata exception
+ *
+ * @author Frédéric Guillot
+ */
 class MetadataException extends \Exception {}
 
+
+/**
+ * Metadata
+ *
+ * @author Frédéric Guillot
+ */
 class Metadata {
 
+    /**
+     * Metadata
+     *
+     * @access private
+     * @var array
+     */
     private $metadata = array();
 
+
+    /**
+     * Model name
+     *
+     * @access private
+     * @var string
+     */
     private $model = '';
+
+
+    /**
+     * Table
+     *
+     * @access private
+     * @var array
+     */
     private $table = '';
+
+
+    /**
+     * Primary key
+     *
+     * @access private
+     * @var array
+     */
     private $primaryKey = '';
+
+
+    /**
+     * Columns
+     *
+     * @access private
+     * @var array
+     */
     private $columns = array();
+
+
+    /**
+     * Column typs
+     *
+     * @access private
+     * @var array
+     */
     private $columns_types = array();
+
+
+    /**
+     * Foreign keys
+     *
+     * @access private
+     * @var array
+     */
     private $foreignKeys = array();
+
+
+    /**
+     * Belongs to relations
+     *
+     * @access private
+     * @var array
+     */
     private $belongsToRelations = array();
+
+
+    /**
+     * Has one relations
+     *
+     * @access private
+     * @var array
+     */
     private $hasOneRelations = array();
+
+
+    /**
+     * Has many relations
+     *
+     * @access private
+     * @var array
+     */
     private $hasManyRelations = array();
+
+
+    /**
+     * Rules
+     *
+     * @access private
+     * @var array
+     */
     private $rules = array();
 
 
+    /**
+     * Constructor
+     *
+     * @access public
+     */
     public function __construct(array $metadata) {
 
         $this->metadata = $metadata;
     }
 
 
+    /**
+     * Get model name
+     *
+     * @access public
+     * @return string Model name
+     */
     public function getModelName() {
 
         if (! $this->model) {
@@ -44,6 +152,14 @@ class Metadata {
     }
 
 
+    /**
+     * Get table name
+     *
+     * If there is no defined table name, the returned value is the class name
+     *
+     * @access public
+     * @return string Table name
+     */
     public function getTable() {
 
         if (! $this->table) {
@@ -66,6 +182,12 @@ class Metadata {
     }
 
 
+    /**
+     * Get columns list
+     *
+     * @access public
+     * @return array columns list
+     */
     public function getColumns() {
 
         if (empty($this->columns) && isset($this->metadata['properties'])) {
@@ -83,6 +205,12 @@ class Metadata {
     }
 
 
+    /**
+     * Get columns types
+     *
+     * @access public
+     * @return array Columns types
+     */
     public function getColumnsTypes() {
 
         if (empty($this->columns_types) && isset($this->metadata['properties'])) {
@@ -104,6 +232,12 @@ class Metadata {
     }
 
 
+    /**
+     * Get the primary key
+     *
+     * @access public
+     * @return string Primary key
+     */
     public function getPrimaryKey() {
 
         if (! $this->primaryKey && isset($this->metadata['properties'])) {
@@ -129,6 +263,13 @@ class Metadata {
     }
 
 
+    /**
+     * Check if the specified model is a belongsTo relation
+     *
+     * @access public
+     * @param string $model Model name
+     * @return boolean True if the model is a belongsTo relation
+     */
     public function isBelongsToRelation($model) {
 
         $relations = $this->getBelongsToRelations();
@@ -142,6 +283,12 @@ class Metadata {
     }
 
 
+    /**
+     * Get belongsTo relations
+     *
+     * @access public
+     * @return array Relations
+     */
     public function getBelongsToRelations() {
 
         if (empty($this->belongsToRelations) && isset($this->metadata['properties'])) {
@@ -159,6 +306,12 @@ class Metadata {
     }
 
 
+    /**
+     * Get hasOne relations
+     *
+     * @access public
+     * @return array Relations
+     */
     public function getHasOneRelations() {
 
         if (empty($this->hasOneRelations) && isset($this->metadata['properties'])) {
@@ -176,6 +329,12 @@ class Metadata {
     }
 
 
+    /**
+     * Get hasMany relations
+     *
+     * @access public
+     * @return array Relations
+     */
     public function getHasManyRelations() {
 
         if (empty($this->hasManyRelations) && isset($this->metadata['properties'])) {
@@ -193,7 +352,12 @@ class Metadata {
     }
 
 
-
+    /**
+     * Get all defined foreign keys
+     *
+     * @access public
+     * @return array Foreign keys
+     */
     public function getForeignKeys() {
 
         if (empty($this->foreignKeys) && isset($this->metadata['properties'])) {
@@ -211,6 +375,15 @@ class Metadata {
     }
 
 
+    /**
+     * Get foreign key for the specified model
+     *
+     * If there is no defined foreign key, this method return "modelname_id"
+     *
+     * @access public
+     * @param string $name Model name
+     * @return string Foreign key
+     */
     public function getForeignKey($model) {
 
         if (empty($this->foreignKeys)) $this->getForeignKeys();
@@ -219,6 +392,12 @@ class Metadata {
     }
 
 
+    /**
+     * Get validator rules for all columns
+     *
+     * @access public
+     * @return array Rules
+     */
     public function getColumnsRules() {
 
         if (empty($this->rules) && isset($this->metadata['properties'])) {
