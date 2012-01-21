@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/picoMapper.php';
+require_once 'src/validators/email.php';
 
 
 class EmailModel extends \picoMapper\Model {

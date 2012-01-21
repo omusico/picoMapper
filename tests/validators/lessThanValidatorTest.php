@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/picoMapper.php';
+require_once 'src/validators/lessThan.php';
 
 
 class LessThanModel extends \picoMapper\Model {

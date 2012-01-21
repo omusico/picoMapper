@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/picoMapper.php';
+require_once 'src/validators/required.php';
 
 
 class RequiredModel extends \picoMapper\Model {

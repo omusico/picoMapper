@@ -1,7 +1,7 @@
 <?php
 
 require_once 'src/picoMapper.php';
-
+require_once 'src/validators/datetime.php';
 
 class DatetimeModel extends \picoMapper\Model {
 

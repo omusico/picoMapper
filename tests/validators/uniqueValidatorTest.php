@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/picoMapper.php';
+require_once 'src/validators/unique.php';
 
 
 class UniqueModel extends \picoMapper\Model {

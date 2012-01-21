@@ -1,6 +1,7 @@
 <?php
 
 require_once 'src/picoMapper.php';
+require_once 'src/validators/lessThanOrEqual.php';
 
 
 class LessThanOrEqualModel extends \picoMapper\Model {
