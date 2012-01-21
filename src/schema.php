@@ -140,7 +140,7 @@ class Schema {
      *
      * @access public
      */
-    public function processFile($version) {
+    public function processMigration($version) {
 
         $filename = self::$migrationDirectory.DIRECTORY_SEPARATOR.$version.'.php';
 
@@ -152,7 +152,11 @@ class Schema {
             $m = new $className();
             $m->up();
             $m->execute();
+
+            return true;
         }
+
+        return false;
     }
 
 
@@ -181,7 +185,7 @@ class Schema {
 
                 if ($file > $current_version) {
 
-                    $this->processFile($file);
+                    $this->processMigration($file);
                 }
             }
 
