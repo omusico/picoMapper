@@ -138,10 +138,20 @@ abstract class BaseBuilder {
 
         foreach ($columns as &$column) {
 
-            $column = sprintf('%s.%s',
-                $this->escapeIdentifier($alias),
-                $this->escapeIdentifier($column)
-            );
+            if (($pos = strpos($column, '.')) !== false) {
+
+                $column = sprintf('%s.%s',
+                    $this->escapeIdentifier(substr($column, 0, $pos)),
+                    $this->escapeIdentifier(substr($column, $pos + 1))
+                );
+            }
+            else {
+
+                $column = sprintf('%s.%s',
+                    $this->escapeIdentifier($alias),
+                    $this->escapeIdentifier($column)
+                );
+            }
         }
 
         if (empty($columns)) {
@@ -170,6 +180,21 @@ abstract class BaseBuilder {
         return sprintf('SELECT COUNT(*) FROM %s AS %s',
             $this->escapeIdentifier($table),
             $this->escapeIdentifier($alias)
+        );
+    }
+
+
+    /**
+     * Generate a DELETE command for a prepared statement
+     *
+     * @access public
+     * @param string $table Table name
+     * @return string Generated SQL
+     */
+    public function delete($table) {
+
+        return sprintf('DELETE FROM %s',
+            $this->escapeIdentifier($table)
         );
     }
 
@@ -239,18 +264,20 @@ abstract class BaseBuilder {
      * Add a ORDER clause for a SELECT command
      *
      * @access public
+     * @param string $alias Alias
      * @param string $column Column name
      * @param string $direction ASC or DESC
      * @return string Generated SQL
      */
-    public function addOrder($column, $direction = 'ASC') {
+    public function addOrder($alias, $column, $direction = 'ASC') {
 
         if ($direction !== 'ASC' && $direction !== 'DESC') {
 
             $direction = 'ASC';
         }
 
-        return sprintf(' ORDER BY %s %s',
+        return sprintf(' ORDER BY %s.%s %s',
+            $this->escapeIdentifier($alias),
             $this->escapeIdentifier($column),
             $direction
         );

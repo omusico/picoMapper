@@ -204,10 +204,10 @@ class PostgresBuilderTest extends PHPUnit_Framework_TestCase {
 
         $builder = new \picoMapper\PostgresBuilder();
 
-        $this->assertEquals(' ORDER BY "toto" ASC', $builder->addOrder('toto'));
-        $this->assertEquals(' ORDER BY "toto" ASC', $builder->addOrder('toto', 'ASC'));
-        $this->assertEquals(' ORDER BY "toto" ASC', $builder->addOrder('toto', 'bla'));
-        $this->assertEquals(' ORDER BY "toto" DESC', $builder->addOrder('toto', 'DESC'));
+        $this->assertEquals(' ORDER BY "titi"."toto" ASC', $builder->addOrder('titi', 'toto'));
+        $this->assertEquals(' ORDER BY "titi"."toto" ASC', $builder->addOrder('titi', 'toto', 'ASC'));
+        $this->assertEquals(' ORDER BY "titi"."toto" ASC', $builder->addOrder('titi', 'toto', 'bla'));
+        $this->assertEquals(' ORDER BY "titi"."toto" DESC', $builder->addOrder('titi', 'toto', 'DESC'));
     }
 
 
