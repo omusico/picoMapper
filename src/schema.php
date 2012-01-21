@@ -3,14 +3,55 @@
 namespace picoMapper;
 
 
+/**
+ * Schema handler
+ *
+ * @author Frédéric Guillot
+ */
 class Schema {
 
+    /**
+     * Migration directory
+     *
+     * @access private
+     * @static
+     * @var string
+     */
     private static $migrationDirectory = 'migrations';
+
+
+    /**
+     * Database instance
+     *
+     * @access private
+     * @var \picoMapper\Database
+     */
     private $db;
+
+
+    /**
+     * Builder instance
+     *
+     * @access private
+     * @var \picoMapper\Builder
+     */
     private $builder;
+
+
+    /**
+     * Migration files
+     *
+     * @access private
+     * @var array
+     */
     private $migrationFiles = array();
 
 
+    /**
+     * Constructor
+     *
+     * @access public
+     */
     public function __construct() {
 
         $this->db = Database::getInstance();
@@ -18,6 +59,11 @@ class Schema {
     }
 
 
+    /**
+     * Create version table
+     *
+     * @access public
+     */
     public function createVersionTable() {
 
         $sql = $this->builder->addTable(
@@ -40,6 +86,12 @@ class Schema {
     }
 
 
+    /**
+     * Get last version from the database
+     *
+     * @access public
+     * @return string Schema version
+     */
     public function getLastVersionFromDatabase() {
 
         $rq = $this->db->prepare('SELECT version FROM schema_version');
@@ -51,6 +103,12 @@ class Schema {
     }
 
 
+    /**
+     * Get last schema version from migrations
+     *
+     * @access public
+     * @return string Schema version
+     */
     public function getLastVersionFromDirectory() {
 
         if (is_dir(self::$migrationDirectory)) {
@@ -77,6 +135,11 @@ class Schema {
     }
 
 
+    /**
+     * Execute a migration
+     *
+     * @access public
+     */
     public function processFile($version) {
 
         $filename = self::$migrationDirectory.DIRECTORY_SEPARATOR.$version.'.php';
@@ -93,6 +156,11 @@ class Schema {
     }
 
 
+    /**
+     * Compare the database version and the last migration version
+     *
+     * @access public
+     */
     public function compareVersion() {
 
         $last_version = $this->getLastVersionFromDirectory();
@@ -131,12 +199,24 @@ class Schema {
     }
 
 
+    /**
+     * Change the default migration directory
+     *
+     * @access public
+     * @param string $migrationDirectory Migration directory
+     */
     public static function config($migrationDirectory) {
 
         self::$migrationDirectory = $migrationDirectory;
     }
 
 
+    /**
+     * Update the database schema
+     *
+     * @access public
+     * @static
+     */
     public static function update() {
 
         $schema = new Schema();
