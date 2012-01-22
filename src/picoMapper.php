@@ -12,6 +12,7 @@ require __DIR__.DIRECTORY_SEPARATOR.'collection_proxy.php';
 require __DIR__.DIRECTORY_SEPARATOR.'schema.php';
 require __DIR__.DIRECTORY_SEPARATOR.'resultset.php';
 require __DIR__.DIRECTORY_SEPARATOR.'migration.php';
+require __DIR__.DIRECTORY_SEPARATOR.'persistence.php';
 require __DIR__.DIRECTORY_SEPARATOR.'validator.php';
 
 require __DIR__.DIRECTORY_SEPARATOR.'builder_factory.php';

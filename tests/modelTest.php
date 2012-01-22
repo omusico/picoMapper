@@ -131,7 +131,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
 
     public function testCountAll() {
 
-        $v = Model2::countAll();
+        $v = Model2::count();
         $this->assertEquals(2, $v);
     }
 

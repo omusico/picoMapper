@@ -3,21 +3,52 @@
 namespace picoMapper;
 
 
+/**
+ * Model exception
+ *
+ * @author Frédéric Guillot
+ */
 class ModelException extends \Exception {};
 
 
+/**
+ * Model base class
+ *
+ * @author Frédéric Guillot
+ */
 class Model {
 
-    private $metadata = null;
+    /**
+     * Validator errors
+     *
+     * @access protected
+     * @var array
+     */
     protected $validatorErrors = array();
+
+
+    /**
+     * Validator messages
+     *
+     * @access public
+     * @var array
+     */
     protected $validatorMessages = array();
 
 
+    /**
+     * Constructor
+     *
+     * If there is specified data, properties are filled
+     *
+     * @access public
+     * @param array $data Model data
+     */
     public function __construct($data = array()) {
 
-        $this->metadata = MetadataStorage::get(get_called_class());
+        $metadata = MetadataStorage::get(get_called_class());
 
-        foreach ($this->metadata->getHasManyRelations() as $property => $model) {
+        foreach ($metadata->getHasManyRelations() as $property => $model) {
 
             $this->$property = new Collection();
 
@@ -32,7 +63,7 @@ class Model {
             }
         }
 
-        foreach ($this->metadata->getHasOneRelations() as $property => $model) {
+        foreach ($metadata->getHasOneRelations() as $property => $model) {
 
             if (isset($data[$property]) && is_array($data[$property])) {
 
@@ -41,7 +72,7 @@ class Model {
             }
         }
 
-        foreach ($this->metadata->getBelongsToRelations() as $property => $model) {
+        foreach ($metadata->getBelongsToRelations() as $property => $model) {
 
             if (isset($data[$property]) && is_array($data[$property])) {
 
@@ -57,6 +88,13 @@ class Model {
     }
 
 
+    /**
+     * Add a validator error
+     *
+     * @access public
+     * @param string $column Column name
+     * @param string $message Error message
+     */
     final public function addError($column, $message) {
 
         if (! isset($this->validatorErrors[$column])) {
@@ -66,27 +104,34 @@ class Model {
 
         $this->validatorErrors[$column][] = $message;
     }
+    
+    
+    /**
+     * Get validator errors
+     *
+     * @access public
+     */
+    final public function getErrors() {
 
-
-    final public function setupProxy() {
-
-        foreach ($this->metadata->getBelongsToRelations() as $property => $model) {
-
-            $this->$property = new ModelProxy(get_called_class(), $model, 'belongsTo', $this);
-        }
-
-        foreach ($this->metadata->getHasOneRelations() as $property => $model) {
-
-            $this->$property = new ModelProxy(get_called_class(), $model, 'hasOne', $this);
-        }
-
-        foreach ($this->metadata->getHasManyRelations() as $property => $model) {
-
-            $this->$property = new CollectionProxy(get_called_class(), $model, $this);
-        }
+        return $this->validatorErrors;
     }
 
 
+    /**
+     * Static magic helpers for the model
+     *
+     * Get a query instance: Model::Query()
+     * Get a query instance: Model::Find()
+     * Find one record by a column name: Model::findBy[Column](value)
+     * Fetch all record: Model::findAll()
+     * Get the number of records: Model::count()
+     * 
+     * @access public
+     * @static
+     * @param string $name Function name
+     * @param array $arguments Function arguments
+     * @return mixed
+     */
     final public static function __callStatic($name, $arguments) {
 
         $name = strtolower($name);
@@ -95,15 +140,29 @@ class Model {
 
             return new Query(get_called_class());
         }
-        else if (substr($name, 0, 4) == 'find') {
+        else if ($name === 'count') {
+
+            $query = new Query(get_called_class());
+            return $query->count();
+        }
+        else if (strpos($name, 'countby') !== false) {
+
+            $property = substr($name, 7);
+            $condition = sprintf('%s.%s = ?', get_called_class(), $property);
 
             $query = new Query(get_called_class());
 
-            if (substr($name, 4, 7) == 'all') {
+            return $query->where($condition, $arguments[0])->count();
+        }
+        else if (strpos($name, 'find') !== false) {
+
+            $query = new Query(get_called_class());
+
+            if (substr($name, 4, 7) === 'all') {
 
                 return $query->fetchAll();
             }
-            else if (substr($name, 4, 2) == 'by') {
+            else if (substr($name, 4, 2) === 'by') {
 
                 $property = substr($name, 6);
 
@@ -112,151 +171,56 @@ class Model {
                     ->fetchOne();
             }
         }
-        else if (substr($name, 0, 5) == 'count') {
-
-            $query = new Query(get_called_class());
-            $name = strtolower($name);
-
-            if (substr($name, 5, 7) == 'all') {
-
-                return $query->count();
-            }
-            else if (substr($name, 5, 2) == 'by') {
-
-                $property = substr($name, 7);
-
-                return $query
-                    ->where(sprintf('%s.%s = ?', get_called_class(), $property), $arguments[0])
-                    ->count();
-            }
-        }
     }
 
 
-    final public function save() {
+    /**
+     * Validate the current model
+     *
+     * @access public
+     * @param boolean $validate Enable or disable the auto validation
+     */
+    final public function save($validate = true) {
+
+        if ($validate === true && $this->validate() === false) {
+
+            throw new ValidatorException('Validator error');
+        }
 
         $this->beforeSave();
 
-        if ($this->validate() === false) {
-
-            throw new ValidatorException('Validation error');
-        }
-
-        $db = Database::getInstance();
-        $builder = BuilderFactory::getInstance();
-        $primaryKey = $this->metadata->getPrimaryKey();
-
-        foreach ($this->metadata->getBelongsToRelations() as $property => $model) {
-
-            if ($this->$property) {
-
-                $metadata = MetadataStorage::get($model);
-                $value = $this->$property->{$metadata->getPrimaryKey()};
-                $this->{$this->metadata->getForeignKey($model)} = $value;
-            }
-        }
-
-        try {
-
-            $values = $this->getValues();
-
-            if (count($values) > 1) {
-
-                if ($this->$primaryKey) {
-
-                    $sql = $builder->update(
-                        $this->metadata->getTable(),
-                        $this->metadata->getColumns(),
-                        $primaryKey
-                    );
-
-                    $rq = $db->prepare($sql);
-
-                    $values[] = $this->$primaryKey;
-
-                    $rq->execute($values); 
-                }
-                else {
-
-                    $sql = $builder->insert(
-                        $this->metadata->getTable(),
-                        $this->metadata->getColumns()
-                    );
-
-                    $rq = $db->prepare($sql);
-                    $rq->execute($values);
-
-                    $this->$primaryKey = $db->lastInsertId();
-                }
-            }
-        }
-        catch (\PDOException $e) {
-
-            throw new DatabaseException($e->getMessage());
-        }
-
+        $p = new Persistence(get_called_class(), $this);
+        $p->save();
+        
         $this->afterSave();
     }
 
 
-    final public function saveAll($inTransaction = false) {
+    /**
+     * Save the model and all defined relations
+     *
+     * @access public
+     * @param boolean $validate Enable or disable the auto validation
+     * @param boolean $inTransaction True if a DB transaction is already established
+     */
+    final public function saveAll($validate = true, $inTransaction = false) {
 
-        $db = Database::getInstance();
-        $primaryKey = $this->metadata->getPrimaryKey();
-
-        try {
-
-            if (! $inTransaction) $db->beginTransaction();
-
-            foreach ($this->metadata->getBelongsToRelations() as $property => $model) {
-
-                if ($this->$property) $this->$property->saveAll(true);
-            }
-
-            $this->save();
-
-            foreach ($this->metadata->getHasOneRelations() as $property => $model) {
-
-                if ($this->$property) {
-
-                    $metadata = MetadataStorage::get($model);
-                    $foreignKey = $metadata->getForeignKey($this->metadata->getModelName());
-
-                    $this->$property->$foreignKey = $this->$primaryKey;
-                    $this->$property->saveAll(true);
-                }
-            }
-
-            foreach ($this->metadata->getHasManyRelations() as $property => $model) {
-
-                if ($this->$property->count() > 0) {
-
-                    $metadata = MetadataStorage::get($model);
-                    $foreignKey = $metadata->getForeignKey($this->metadata->getModelName());
-
-                    for ($i = 0, $ilen = $this->$property->count(); $i < $ilen; $i++) {
-
-                        $this->$property->offsetGet($i)->$foreignKey = $this->$primaryKey;
-                        $this->$property->offsetGet($i)->saveAll(true);
-                    }
-                }
-            }
-
-            if (! $inTransaction) $db->commit();
-        }
-        catch (\PDOException $e) {
-
-            $db->rollback();
-            throw new DatabaseException($e->getMessage());
-        }
+        $p = new Persistence(get_called_class(), $this);
+        $p->saveAll($inTransaction, $validate);
     }
 
 
+    /**
+     * Validate the model
+     *
+     * @access public
+     * @return boolean True if everything is ok
+     */
     final public function validate() {
 
         $this->beforeValidate();
 
-        $v = new Validator($this->metadata->getModelName(), $this, $this->validatorMessages);
+        $v = new Validator(get_called_class(), $this, $this->validatorMessages);
         $rs = $v->execute();
 
         $this->afterValidate();
@@ -265,40 +229,41 @@ class Model {
     }
 
 
-    final public function getValues() {
-
-        $data = array();
-
-        foreach ($this->metadata->getColumns() as $column) {
-
-            $data[] = $this->$column;
-        }
-
-        return $data;
-    }
-
-
-    final public function getValidatorErrors() {
-
-        return $this->validatorErrors;
-    }
-
-
+    /**
+     * Before validate callback
+     *
+     * @access public
+     */
     public function beforeValidate() {
 
     }
 
 
+    /**
+     * After validate callback
+     *
+     * @access public
+     */
     public function afterValidate() {
 
     }
 
 
+    /**
+     * Before save callback
+     *
+     * @access public
+     */
     public function beforeSave() {
 
     }
 
 
+    /**
+     * After save callback
+     *
+     * @access public
+     */
     public function afterSave() {
 
     }

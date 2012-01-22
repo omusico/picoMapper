@@ -4,7 +4,7 @@ namespace picoMapper;
 
 
 /**
- * Convert sql resultset to a model instance
+ * Convert a SQL resultset to a model instance
  *
  * @author Frédéric Guillot
  */
@@ -16,16 +16,15 @@ class ResultSet {
      *
      * @access public
      * @static
-     * @param string $modelName Model name
+     * @param string $name Model name
      * @param array $row SQL resultset
      * @return object Model instance
      */
-    public static function convert($modelName, $row) {
+    public static function convert($name, $row) {
 
-        $model = new $modelName();
-        $model->setupProxy();
+        $model = self::initialize($name);
 
-        $metadata = MetadataStorage::get($modelName);
+        $metadata = MetadataStorage::get($name);
         $types = $metadata->getColumnsTypes();
 
         foreach ($row as $column => $value) {
@@ -72,6 +71,38 @@ class ResultSet {
             default:
                 return $value;
         }
+    }
+
+    
+    /**
+     * Initialize a model instance and setup proxy for lazy loading of relations
+     *
+     * @access public
+     * @static
+     * @param string $name Model name
+     * @return object Model instance
+     */
+    public static function initialize($name) {
+
+        $model = new $name();
+        $metadata = MetadataStorage::get($name);
+
+        foreach ($metadata->getBelongsToRelations() as $property => $relationModel) {
+
+            $model->$property = new ModelProxy($name, $relationModel, 'belongsTo', $model);
+        }
+
+        foreach ($metadata->getHasOneRelations() as $property => $relationModel) {
+
+            $model->$property = new ModelProxy($name, $relationModel, 'hasOne', $model);
+        }
+
+        foreach ($metadata->getHasManyRelations() as $property => $relationModel) {
+
+            $model->$property = new CollectionProxy($name, $relationModel, $model);
+        }
+
+        return $model;
     }
 }
 

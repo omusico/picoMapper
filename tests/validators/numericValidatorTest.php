@@ -22,7 +22,7 @@ class NumericValidatorTest extends PHPUnit_Framework_TestCase {
         $rs = $v->execute($model, 'missingValue');
 
         $this->assertTrue($rs);
-        $this->assertEquals(array(), $model->getValidatorErrors());
+        $this->assertEquals(array(), $model->getErrors());
     }
 
 
@@ -36,7 +36,7 @@ class NumericValidatorTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($rs);
         $this->assertEquals(
             array('badValue' => array('This field must be numeric')),
-            $model->getValidatorErrors()
+            $model->getErrors()
         );
     }
 
@@ -49,7 +49,7 @@ class NumericValidatorTest extends PHPUnit_Framework_TestCase {
         $rs = $v->execute($model, 'goodValue');
 
         $this->assertTrue($rs);
-        $this->assertEquals(array(), $model->getValidatorErrors());
+        $this->assertEquals(array(), $model->getErrors());
     }
 }
 

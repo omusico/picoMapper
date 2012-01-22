@@ -54,7 +54,7 @@ class UniqueValidatorTest extends PHPUnit_Framework_TestCase {
         $rs = $v->execute($model, 'name');
 
         $this->assertFalse($rs);
-        $this->assertEquals(array('name' => array('This field must be unique')), $model->getValidatorErrors());
+        $this->assertEquals(array('name' => array('This field must be unique')), $model->getErrors());
     }
 
 
@@ -67,7 +67,7 @@ class UniqueValidatorTest extends PHPUnit_Framework_TestCase {
         $rs = $v->execute($model, 'name');
 
         $this->assertTrue($rs);
-        $this->assertEquals(array(), $model->getValidatorErrors());
+        $this->assertEquals(array(), $model->getErrors());
     }
 
 }

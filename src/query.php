@@ -114,6 +114,7 @@ class Query {
      *
      * @access public
      * @param string $model Model name
+     * @return \picoMapper\Query Current instance
      */
     public function __construct($model) {
 

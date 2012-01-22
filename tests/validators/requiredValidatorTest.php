@@ -23,7 +23,7 @@ class RequiredValidatorTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($rs);
         $this->assertEquals(
             array('missingValue' => array('This field is required')),
-            $model->getValidatorErrors()
+            $model->getErrors()
         );
     }
 
@@ -36,7 +36,7 @@ class RequiredValidatorTest extends PHPUnit_Framework_TestCase {
         $rs = $v->execute($model, 'goodValue');
 
         $this->assertTrue($rs);
-        $this->assertEquals(array(), $model->getValidatorErrors());
+        $this->assertEquals(array(), $model->getErrors());
     }
 }
 

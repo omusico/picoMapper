@@ -33,7 +33,7 @@ class LessThanValidatorTest extends PHPUnit_Framework_TestCase {
         $rs = $v->execute($model, 'missingValue', array(6));
 
         $this->assertTrue($rs);
-        $this->assertEquals(array(), $model->getValidatorErrors());
+        $this->assertEquals(array(), $model->getErrors());
     }
 
 
@@ -47,7 +47,7 @@ class LessThanValidatorTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($rs);
         $this->assertEquals(
             array('badValue' => array('This field must be less than 6')),
-            $model->getValidatorErrors()
+            $model->getErrors()
         );
     }
 
@@ -60,7 +60,7 @@ class LessThanValidatorTest extends PHPUnit_Framework_TestCase {
         $rs = $v->execute($model, 'goodValue', array(6));
 
         $this->assertTrue($rs);
-        $this->assertEquals(array(), $model->getValidatorErrors());
+        $this->assertEquals(array(), $model->getErrors());
     }
 }
 

@@ -32,7 +32,7 @@ class DatetimeValidatorTest extends PHPUnit_Framework_TestCase {
         $rs = $v->execute($model, 'missingValue', array(6));
 
         $this->assertTrue($rs);
-        $this->assertEquals(array(), $model->getValidatorErrors());
+        $this->assertEquals(array(), $model->getErrors());
     }
 
 
@@ -46,7 +46,7 @@ class DatetimeValidatorTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($rs);
         $this->assertEquals(
             array('badValue' => array('This date must follow this format d/m/Y')),
-            $model->getValidatorErrors()
+            $model->getErrors()
         );
     }
 
@@ -59,7 +59,7 @@ class DatetimeValidatorTest extends PHPUnit_Framework_TestCase {
         $rs = $v->execute($model, 'goodValue', array('d/m/Y'));
 
         $this->assertTrue($rs);
-        $this->assertEquals(array(), $model->getValidatorErrors());
+        $this->assertEquals(array(), $model->getErrors());
     }
 }
 
