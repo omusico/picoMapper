@@ -110,7 +110,7 @@ class Validator {
      * @access private
      * @var array
      */
-    private $modelMessage;
+    private $modelMessages;
 
 
     /**
@@ -135,45 +135,16 @@ class Validator {
      * @access public
      * @return boolean True if everything is ok
      */
-    public function execute() {
+    public function validateAll() {
 
         $metadata = MetadataStorage::get($this->modelName);
-        $columns_rules = $metadata->getColumnsRules();
         $results = array();
-        $directories = array(
-            getcwd().DIRECTORY_SEPARATOR.'validators',
-            __DIR__.DIRECTORY_SEPARATOR.'validators'
-        );
 
-        foreach ($columns_rules as $column => $rules) {
+        foreach ($metadata->getColumnsRules() as $column => $rules) {
 
             foreach ($rules as $rule => $args) {
 
-                $className = __NAMESPACE__.'\Validators\\'.$rule.'Validator';
-
-                if (! class_exists($className)) {
-
-                    foreach ($directories as $directory) {
-
-                        $filename = $directory.DIRECTORY_SEPARATOR.$rule.'.php';
-
-                        if (file_exists($filename)) {
-
-                            require $filename;
-                        }
-                    }
-                }
-
-                if (isset($this->modelMessages[$rule])) {
-
-                    $validator = new $className($this->modelMessages[$rule]);
-                }
-                else {
-
-                    $validator = new $className();
-                }
-
-                $result = $validator->execute($this->modelInstance, $column, $args);
+                $result = $this->executeRule($rule, $args, $column);
 
                 $results[] = $result;
 
@@ -182,6 +153,94 @@ class Validator {
         }
 
         return ! in_array(false, $results, true);
+    }
+
+
+    /**
+     * Validate only one field
+     *
+     * @access public
+     * @param string $column Column name
+     * @param array $rules List of rules
+     * @return boolean True if everything is ok
+     */
+    public function validateField($column, $rules = array()) {
+        
+        if (empty($rules)) {
+
+            $metadata = MetadataStorage::get($this->modelName);
+            $columnsRules = $metadata->getColumnsRules();
+
+            if (isset($columnsRules[$column])) {
+
+                $rules = $columnsRules[$column];
+            }
+        }
+
+        foreach ($rules as $rule => $args) {
+
+            $result = $this->executeRule($rule, $args, $column);
+
+            if ($result === false) return false;
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Execute a validator rule
+     *
+     * @access public
+     * @param string $rule Rule name
+     * @param array $args Rule arguments
+     * @param string $column Column name
+     * @return boolean True if everything is ok
+     */
+    public function executeRule($rule, $args, $column) {
+
+        $className = __NAMESPACE__.'\Validators\\'.$rule.'Validator';
+
+        if (! class_exists($className)) {
+
+            $this->loadRule($rule);
+        }
+
+        if (isset($this->modelMessages[$rule])) {
+
+            $validator = new $className($this->modelMessages[$rule]);
+        }
+        else {
+
+            $validator = new $className();
+        }
+
+        return $validator->execute($this->modelInstance, $column, $args);
+    }
+
+
+    /**
+     * Load a validator rule
+     *
+     * @access public
+     * @param string $rule Rule name
+     */
+    public function loadRule($rule) {
+        
+        $directories = array(
+            getcwd().DIRECTORY_SEPARATOR.'validators',
+            __DIR__.DIRECTORY_SEPARATOR.'validators'
+        );
+
+        foreach ($directories as $directory) {
+
+            $filename = $directory.DIRECTORY_SEPARATOR.$rule.'.php';
+
+            if (file_exists($filename)) {
+
+                require_once $filename;
+            }
+        }
     }
 }
 

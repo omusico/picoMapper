@@ -221,11 +221,26 @@ class Model {
         $this->beforeValidate();
 
         $v = new Validator(get_called_class(), $this, $this->validatorMessages);
-        $rs = $v->execute();
+        $rs = $v->validateAll();
 
         $this->afterValidate();
 
         return $rs;
+    }
+
+
+    /**
+     * Validate only one field
+     *
+     * @access public
+     * @param string $column Column name
+     * @param array $rules List of rules
+     * @return boolean True if everything is ok
+     */
+    public function validateField($column, $rules = array()) {
+
+        $v = new Validator(get_called_class(), $this, $this->validatorMessages);
+        return $v->validateField($column, $rules);
     }
 
 
