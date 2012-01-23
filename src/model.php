@@ -290,7 +290,30 @@ class Model {
 
         foreach ($metadata->getColumns() as $column) {
 
-            $data[$column] = $this->$column;
+            if ($this->$column instanceOf \Datetime) {
+
+                $types = $metadata->getColumnsTypes();
+                $type = $types[$column];
+
+                if ($type === 'time') {
+
+                    $value = $this->$column->format('H:i:s');
+                }
+                else if ($type === 'datetime') {
+
+                    $value = $this->$column->format('Y-m-d H:i:s');
+                }
+                else if ($type === 'date') {
+
+                    $value = $this->$column->format('Y-m-d');
+                }
+            }
+            else {
+
+                $value = $this->$column;
+            }
+
+            $data[$column] = $value;
         }
 
         return $data;
