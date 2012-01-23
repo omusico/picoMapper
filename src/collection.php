@@ -78,13 +78,20 @@ class Collection implements \ArrayAccess, \Iterator {
     }
 
 
-    public function toArray() {
+    /**
+     * Get the collection as an array
+     *
+     * @access public
+     * @param boolean $recursive Fetch or not relations
+     * @return array
+     */
+    public function toArray($recursive = true) {
 
         $data = array();
 
         foreach ($this->container as $object) {
 
-            $data[] = $object->toArray();
+            $data[] = $object->toArray($recursive);
         }
 
         return $data;

@@ -245,6 +245,59 @@ class Model {
 
 
     /**
+     * Get model data inside an array
+     *
+     * @access public
+     * @param boolean $recursive Fetch or not relations
+     * @return array Model data
+     */
+    public function toArray($recursive = true) {
+
+        $data = array();
+        $metadata = MetadataStorage::get(get_called_class());
+
+        if ($recursive === true) {
+
+            foreach ($metadata->getHasManyRelations() as $property => $model) {
+
+                $data[$property] = $this->$property->toArray(false);
+            }
+
+            foreach ($metadata->getHasOneRelations() as $property => $model) {
+
+                if ($this->$property !== null) {
+
+                    $data[$property] = $this->$property->toArray(false);
+                }
+                else {
+
+                    $data[$property] = null;
+                }
+            }
+
+            foreach ($metadata->getBelongsToRelations() as $property => $model) {
+
+                if ($this->$property !== null) {
+
+                    $data[$property] = $this->$property->toArray(false);
+                }
+                else {
+
+                    $data[$property] = null;
+                }
+            }
+        }
+
+        foreach ($metadata->getColumns() as $column) {
+
+            $data[$column] = $this->$column;
+        }
+
+        return $data;
+    }
+
+
+    /**
      * Before validate callback
      *
      * @access public

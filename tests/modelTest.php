@@ -50,6 +50,19 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
 
+    public function testToArray() {
+
+        $m = new Model2();
+        $m->data = 'truc';
+        $m->id = 2;
+
+        $this->assertEquals(
+            array('id' => 2, 'data' => 'truc'),
+            $m->toArray()
+        );
+    }
+
+
     /**
      * @expectedException picoMapper\MetadataException
      * @expectedExceptionMessage No primary key defined for the model "Model0"
