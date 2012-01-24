@@ -48,17 +48,8 @@ class MetadataStorage {
     public static function get($model) {
 
         if (! isset(self::$store[$model])) {
-            
-            $reflection = new \ReflectionClass('\picoMapper\Model');
-            $excludeMethods = array();
-
-            foreach ($reflection->getMethods() as $m) {
-
-                $excludeMethods[] = $m->getName();
-            }
 
             $parser = new MetadataParser($model);
-            $parser->excludeMethods($excludeMethods);
             $parser->registerAnnotations(self::$annotations);
 
             self::$store[$model] = new Metadata($parser->execute());

@@ -20,15 +20,6 @@ class MetadataParser {
 
 
     /**
-     * Excluded methods to parse
-     *
-     * @access private
-     * @var array
-     */
-    private $exclude_methods = array();
-
-
-    /**
      * Class name to parse
      *
      * @access private
@@ -75,25 +66,6 @@ class MetadataParser {
             $metadata['properties'][$p->getName()] = $this->parseAnnotations($p->getDocComment());
         }
         
-        $metadata['methods'] = array();
-        $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
-
-        foreach ($methods as $m) {
-
-            if (! in_array($m->getName(), $this->exclude_methods)) {
-
-                $metadata['methods'][$m->getName()] = $this->parseAnnotations($m->getDocComment());
-                $metadata['methods'][$m->getName()]['parameters'] = array();
-
-                $method = $reflection->getMethod($m->getName());
-
-                foreach ($method->getParameters() as $p) {
-
-                    $metadata['methods'][$m->getName()]['parameters'][] = $p->getName();
-                }
-            }
-        }
-
         return $metadata;
     }
 
@@ -120,6 +92,8 @@ class MetadataParser {
                 if (($p = strpos($line, '@'.$annotation)) !== false) {
 
                     $value = substr($line, $p + strlen($annotation) + 2);
+
+                    if ($value === false) $value = array();
 
                     if (isset($data[$annotation])) {
 
@@ -190,18 +164,6 @@ class MetadataParser {
     public function registerAnnotations(array $annotations) {
 
         $this->annotations = array_merge($this->annotations, $annotations);
-    }
-
-
-    /**
-     * Exclude methods of the parsing
-     *
-     * @access public
-     * @param array $methods Excluded methods name
-     */
-    public function excludeMethods(array $methods) {
-
-        $this->exclude_methods = $methods;
     }
 }
 
