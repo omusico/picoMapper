@@ -3,19 +3,58 @@
 namespace picoMapper;
 
 
+/**
+ * Metadata parser
+ *
+ * @author Frédéric Guillot
+ */
 class MetadataParser {
 
+    /**
+     * Annotations
+     *
+     * @access private
+     * @var array
+     */
     private $annotations = array();
+
+
+    /**
+     * Excluded methods to parse
+     *
+     * @access private
+     * @var array
+     */
     private $exclude_methods = array();
+
+
+    /**
+     * Class name to parse
+     *
+     * @access private
+     * @var string
+     */
     private $className = null;
 
-  
+
+    /**
+     * Constructor
+     *
+     * @access public
+     * @param string $className Name of the class to parse
+     */
     public function __construct($className) {
 
         $this->className = $className;
     }
 
 
+    /**
+     * Execute the parser
+     *
+     * @access public
+     * @return array Metadata
+     */
     public function execute() {
         
         if (! class_exists($this->className)) {
@@ -59,6 +98,13 @@ class MetadataParser {
     }
 
 
+    /**
+     * Parse annotations
+     *
+     * @access public
+     * @param string $comment Extracted comment bloc
+     * @return array Annotations
+     */
     public function parseAnnotations($comment) {
 
         $data = array();
@@ -123,18 +169,36 @@ class MetadataParser {
     }
 
 
+    /**
+     * Add annotation to parse, only registred annotations are parsed
+     *
+     * @access public
+     * @param string $identifier Annotation name
+     */
     public function registerAnnotation($identifier) {
 
         $this->annotations[] = $identifier;
     }
 
 
+    /**
+     * Add a list of annotations to parse, only registred annotations are parsed
+     *
+     * @access public
+     * @param string $annotations Annotations name list
+     */
     public function registerAnnotations(array $annotations) {
 
         $this->annotations = array_merge($this->annotations, $annotations);
     }
 
 
+    /**
+     * Exclude methods of the parsing
+     *
+     * @access public
+     * @param array $methods Excluded methods name
+     */
     public function excludeMethods(array $methods) {
 
         $this->exclude_methods = $methods;

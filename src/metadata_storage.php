@@ -3,10 +3,30 @@
 namespace picoMapper;
 
 
+/**
+ * Metadata storage
+ *
+ * @author Frédéric Guillot
+ */
 class MetadataStorage {
 
+    /**
+     * Container
+     *
+     * @access private
+     * @static
+     * @var array
+     */
     private static $store = array();
 
+
+    /**
+     * Registered annotations for the parser
+     *
+     * @access private
+     * @static
+     * @var array
+     */
     private static $annotations = array(
         'table',
         'type',
@@ -18,6 +38,13 @@ class MetadataStorage {
     );
 
 
+    /**
+     * Get a metadata instance for the specified model
+     *
+     * @access public
+     * @param string $model Class name
+     * @return \picoMapper\Metadata
+     */
     public static function get($model) {
 
         if (! isset(self::$store[$model])) {

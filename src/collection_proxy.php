@@ -3,14 +3,59 @@
 namespace picoMapper;
 
 
+/**
+ * Collection proxy
+ *
+ * Load relations on-demand (lazy loading)
+ *
+ * @author Frédéric Guillot
+ */
 class CollectionProxy implements \ArrayAccess, \Iterator {
 
+    /**
+     * Instance of the relation model
+     *
+     * @access private
+     * @var \picoMapper\Model
+     */
     private $instance = null;
+
+
+    /**
+     * Model name of the source
+     *
+     * @access private
+     * @var string
+     */
     private $originModel;
+
+
+    /**
+     * Model name of the relation
+     *
+     * @access private
+     * @var string
+     */
     private $relationModel;
+
+
+    /**
+     * Instance of the base model
+     *
+     * @access private
+     * @var \picoMapper\Model
+     */
     private $modelInstance;
 
 
+    /**
+     * Constructor
+     *
+     * @access public
+     * @param string $originModel Origin model name
+     * @param string $relationModel Relation model name
+     * @param \picoMapper\Model $modelInstance Current model instance
+     */
     public function __construct($originModel, $relationModel, &$modelInstance) {
 
         $this->originModel = $originModel;
@@ -19,6 +64,11 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Initialize a hasMany relation
+     *
+     * @access public
+     */
     public function initHasManyRelation() {
 
         $originMeta = MetadataStorage::get($this->originModel);
@@ -34,6 +84,11 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Initialize a new instance
+     *
+     * @access public
+     */
     public function initInstance() {
 
         if ($this->instance === null) {
@@ -43,12 +98,25 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Check if the proxified instance is loaded
+     *
+     * @access public
+     * @return boolean True if the instance is loaded
+     */
     public function instanceLoaded() {
 
         return $this->instance !== null ? true : false;
     }
 
 
+    /**
+     * Get a property value
+     *
+     * @access public
+     * @param string $name Property name
+     * @return mixed
+     */
     public function __get($name) {
 
         $this->initInstance();
@@ -57,6 +125,13 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Set a new property to the proxified class
+     *
+     * @access public
+     * @param string $name Property name
+     * @param mixed $value Value
+     */
     public function __set($name, $value) {
 
         $this->initInstance();
@@ -68,6 +143,12 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Check if property exists inside the proxified class
+     *
+     * @access public
+     * @return boolean True if exists
+     */
     public function __isset($name) {
 
         $this->initInstance();
@@ -76,6 +157,12 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Call all unknown methods to the proxified class
+     *
+     * @access public
+     * @return mixed
+     */
     public function __call($name, $arguments) {
 
         $this->initInstance();
@@ -87,6 +174,11 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Rewind
+     *
+     * @access public
+     */
     public function rewind() {
 
         $this->initInstance();
@@ -94,6 +186,12 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Current
+     *
+     * @access public
+     * @return \picoMapper\Model
+     */
     public function current() {
 
         $this->initInstance();
@@ -101,6 +199,12 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Key
+     *
+     * @access public
+     * @return integer
+     */
     public function key() {
 
         $this->initInstance();
@@ -108,6 +212,11 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Next
+     *
+     * @access public
+     */
     public function next() {
 
         $this->initInstance();
@@ -115,6 +224,11 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Valid
+     *
+     * @access public
+     */
     public function valid() {
 
         $this->initInstance();
@@ -122,6 +236,13 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Add a model instance at the specified offset
+     *
+     * @access public
+     * @param integer $offset Offset
+     * @param \picoMapper\Model $value Model instance
+     */
     public function offsetSet($offset, $value) {
 
         $this->initInstance();
@@ -129,6 +250,13 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Check if there is a model instance at the specified offset
+     *
+     * @access public
+     * @param integer $offset Offset
+     * @return boolean True if exists
+     */
     public function offsetExists($offset) {
 
         $this->initInstance();
@@ -136,6 +264,12 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Remove a model inside the container
+     *
+     * @access public
+     * @param integer $offset Offset
+     */
     public function offsetUnset($offset) {
 
         $this->initInstance();
@@ -143,6 +277,13 @@ class CollectionProxy implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Get the model instance at the specified offset
+     *
+     * @access public
+     * @param integer $offset Offset
+     * @param \picoMapper\Model
+     */
     public function offsetGet($offset) {
 
         $this->initInstance();

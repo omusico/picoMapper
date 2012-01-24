@@ -12,41 +12,88 @@ namespace picoMapper;
  */
 class Collection implements \ArrayAccess, \Iterator {
 
+    /**
+     * Current position inside the container
+     *
+     * @access private
+     * @var integer
+     */
     private $position = 0;
 
+
+    /**
+     * Model container
+     *
+     * @access private
+     * @var array
+     */
     private $container = array();
 
 
+    /**
+     * Rewind
+     *
+     * @access public
+     */
     public function rewind() {
 
         $this->position = 0;
     }
 
 
+    /**
+     * Current
+     *
+     * @access public
+     * @return \picoMapper\Model
+     */
     public function current() {
 
         return $this->container[$this->position];
     }
 
 
+    /**
+     * Key
+     *
+     * @access public
+     * @return integer
+     */
     public function key() {
 
         return $this->position;
     }
 
 
+    /**
+     * Next
+     *
+     * @access public
+     */
     public function next() {
 
         ++$this->position;
     }
 
 
+    /**
+     * Valid
+     *
+     * @access public
+     */
     public function valid() {
 
         return isset($this->container[$this->position]);
     }
 
 
+    /**
+     * Add a model instance at the specified offset
+     *
+     * @access public
+     * @param integer $offset Offset
+     * @param \picoMapper\Model $value Model instance
+     */
     public function offsetSet($offset, $value) {
 
         if (is_null($offset) || ! is_numeric($offset)) {
@@ -60,18 +107,38 @@ class Collection implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Check if there is a model instance at the specified offset
+     *
+     * @access public
+     * @param integer $offset Offset
+     * @return boolean True if exists
+     */
     public function offsetExists($offset) {
 
         return isset($this->container[$offset]);
     }
 
 
+    /**
+     * Remove a model inside the container
+     *
+     * @access public
+     * @param integer $offset Offset
+     */
     public function offsetUnset($offset) {
 
         unset($this->container[$offset]);
     }
 
 
+    /**
+     * Get the model instance at the specified offset
+     *
+     * @access public
+     * @param integer $offset Offset
+     * @param \picoMapper\Model
+     */
     public function offsetGet($offset) {
 
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -98,6 +165,12 @@ class Collection implements \ArrayAccess, \Iterator {
     }
 
 
+    /**
+     * Get the number of elements inside the container
+     *
+     * @access public
+     * @return integer Number of elements
+     */
     public function count() {
 
         return count($this->container);

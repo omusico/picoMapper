@@ -18,6 +18,7 @@ abstract class Migration {
      */
     private $sql = array();
 
+
     /**
      * Builder instance
      *
@@ -25,6 +26,7 @@ abstract class Migration {
      * @var Builder instance
      */
     private $builder;
+
 
     /**
      * Database instance
@@ -34,6 +36,7 @@ abstract class Migration {
      */
     private $db;
 
+
     /**
      * Set up instructions
      *
@@ -41,6 +44,7 @@ abstract class Migration {
      * @abstract
      */
     abstract public function up();
+
 
     /**
      * Set down instructions

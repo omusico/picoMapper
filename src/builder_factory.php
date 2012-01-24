@@ -5,6 +5,8 @@ namespace picoMapper;
 
 /**
  * Builder factory
+ *
+ * @author Frédéric Guillot
  */
 class BuilderFactory {
 
