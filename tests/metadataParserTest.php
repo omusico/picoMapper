@@ -30,6 +30,8 @@ class ParseMoi {
      * Var
      *
      * @access public
+     * @author toi
+     * @author moi
      * @foreignkey Bla
      */
     public $var;
@@ -73,7 +75,7 @@ class MetadataParserTest extends PHPUnit_Framework_TestCase {
                 'author' => 'moi',
                 'properties' => array(
                     'toto' => array('foreignKey' => 'machin'),
-                    'var' => array()
+                    'var' => array('author' => array('toi', 'moi'))
                 )
             ),
             $metadata
