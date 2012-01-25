@@ -39,7 +39,7 @@ class Model {
     /**
      * Validator messages
      *
-     * @access public
+     * @access protected
      * @var array
      */
     protected $validatorMessages = array();

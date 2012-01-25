@@ -1265,7 +1265,7 @@ http://www.sqlite.org/faq.html#q11</p>]]></long-description>
       </method>
     </class>
   </file>
-  <file path="model.php" hash="6398ae21bcf1a071f7e1d84e25712093">
+  <file path="model.php" hash="bf531625834d28c705096a59c0209bac">
     <parse_markers>
       <error line="1" code="50007">No page-level DocBlock was found in file model.php</error>
     </parse_markers>
@@ -1306,7 +1306,7 @@ http://www.sqlite.org/faq.html#q11</p>]]></long-description>
         <docblock line="39">
           <description><![CDATA[Validator messages]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="39" name="access" description="public"/>
+          <tag line="39" name="access" description="protected"/>
           <tag line="39" name="var" description="" type="array">
             <type by_reference="false">array</type>
           </tag>
