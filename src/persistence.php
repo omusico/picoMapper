@@ -48,15 +48,23 @@ class Persistence {
      * Get model data
      *
      * @access public
+     * @param boolean $noPrimaryKey Return or not the primary key
      * @return array List of values
      */
-    public function getValues() {
+    public function getValues($noPrimaryKey = false) {
 
         $data = array();
 
         foreach ($this->metadata->getColumns() as $column) {
 
-            $data[] = $this->model->$column;
+            if ($noPrimaryKey === true && $column !== $this->metadata->getPrimaryKey()) {
+                
+                $data[] = $this->model->$column;
+            }
+            else if ($noPrimaryKey === false) {
+
+                $data[] = $this->model->$column;
+            }
         }
 
         return $data;
@@ -84,15 +92,15 @@ class Persistence {
 
         try {
 
-            $values = $this->getValues();
+            $values = $this->getValues(true);
 
-            if (count($values) > 1) {
+            if (! empty($values)) {
 
                 if ($this->model->$primaryKey) {
 
                     $sql = $this->builder->update(
                         $this->metadata->getTable(),
-                        $this->metadata->getColumns(),
+                        $this->metadata->getColumns(true),
                         $primaryKey
                     );
 
@@ -106,7 +114,7 @@ class Persistence {
 
                     $sql = $this->builder->insert(
                         $this->metadata->getTable(),
-                        $this->metadata->getColumns()
+                        $this->metadata->getColumns(true)
                     );
 
                     $rq = $this->db->prepare($sql);

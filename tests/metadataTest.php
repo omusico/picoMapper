@@ -123,6 +123,7 @@ class MetadataTest extends PHPUnit_Framework_TestCase {
         $m = new \picoMapper\Metadata($metadata);
         
         $this->assertEquals(array('toto', 'bibi'), $m->getColumns());
+        $this->assertEquals(array('bibi'), $m->getColumns(true));
     }
 
 

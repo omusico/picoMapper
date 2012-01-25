@@ -186,9 +186,10 @@ class Metadata {
      * Get columns list
      *
      * @access public
+     * @param boolean $noPrimaryKey Return or not the primary key
      * @return array columns list
      */
-    public function getColumns() {
+    public function getColumns($noPrimaryKey = false) {
 
         if (empty($this->columns) && isset($this->metadata['properties'])) {
 
@@ -199,6 +200,21 @@ class Metadata {
                     $this->columns[] = $name;
                 }
             }
+        }
+
+        if ($noPrimaryKey === true) {
+
+            $columns = array();
+
+            foreach ($this->columns as $key => $column) {
+
+                if ($column !== $this->getPrimaryKey()) {
+
+                    $columns[] = $column;
+                }
+            }
+
+            return $columns;
         }
 
         return $this->columns;

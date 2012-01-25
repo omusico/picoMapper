@@ -85,6 +85,19 @@ class PersistenceTest extends PHPUnit_Framework_TestCase {
     }
 
 
+    public function testGetValues() {
+
+        $a = new ModelPA();
+        $a->primary_a = 2;
+        $a->data = 'truc';
+
+        $p = new \picoMapper\Persistence('ModelPA', $a);
+
+        $this->assertEquals(array(2, 'truc'), $p->getValues());
+        $this->assertEquals(array('truc'), $p->getValues(true));
+    }
+
+
     public function testSave() {
 
         $a = new ModelPA();
