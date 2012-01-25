@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of picoMapper.
+ *
+ * (c) Frédéric Guillot http://fguillot.fr
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace picoMapper;
 
 
@@ -137,7 +146,7 @@ class Collection implements \ArrayAccess, \Iterator {
      *
      * @access public
      * @param integer $offset Offset
-     * @param \picoMapper\Model
+     * @return \picoMapper\Model
      */
     public function offsetGet($offset) {
 

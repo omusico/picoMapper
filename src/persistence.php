@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of picoMapper.
+ *
+ * (c) Frédéric Guillot http://fguillot.fr
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace picoMapper;
 
 
@@ -135,6 +144,8 @@ class Persistence {
      * Save the model and all relations
      *
      * @access public
+     * @param boolean $inTransaction Set to true if you are already in a transaction
+     * @param boolean $validate Set to true to validate model before save
      */
     public function saveAll($inTransaction = false, $validate = true) {
 

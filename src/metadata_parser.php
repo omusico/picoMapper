@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of picoMapper.
+ *
+ * (c) Frédéric Guillot http://fguillot.fr
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace picoMapper;
 
 
@@ -159,7 +168,7 @@ class MetadataParser {
      * Add a list of annotations to parse, only registred annotations are parsed
      *
      * @access public
-     * @param string $annotations Annotations name list
+     * @param array $annotations Annotations name list
      */
     public function registerAnnotations(array $annotations) {
 

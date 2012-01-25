@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of picoMapper.
+ *
+ * (c) Frédéric Guillot http://fguillot.fr
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace picoMapper;
 
 
@@ -61,7 +70,7 @@ class SqliteBuilder extends BaseBuilder {
      *
      * @access public
      * @param string $table Table name
-     * @param string $name Column name
+     * @param string $column Column name
      * @return string Generated SQL
      */
     public function dropColumn($table, $column) {

@@ -1,0 +1,261 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>DocBlox Documentation</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><link rel="stylesheet" href="css/jquery-ui.css" type="text/css"></link><link rel="stylesheet" href="css/docblox/jquery-ui-1.8.16.custom.css" type="text/css"></link><link rel="stylesheet" href="css/jquery.treeview.css" type="text/css"></link><link rel="stylesheet" href="css/theme.css" type="text/css"></link><script type="text/javascript" src="js/jquery-1.4.2.min.js"></script><script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script><script type="text/javascript" src="js/jquery.tools.min.js"></script><script type="text/javascript" src="js/jquery.cookie.js"></script><script type="text/javascript" src="js/jquery.treeview.js"></script><script type="text/javascript">
+            $(document).ready(function() {
+                $(".filetree").treeview({
+                    collapsed: true,
+                    persist: "cookie"
+                });
+
+                $("#accordion").accordion({
+                    collapsible: true,
+                    autoHeight:  false,
+                    fillSpace:   true
+                });
+
+                $(".tabs").tabs();
+            });
+        </script></head><body><script xmlns="" type="text/javascript" src="js/sidebar.js"></script><div xmlns="" id="sidebar">
+<div id="sidebar-header">
+<img src="images/icon48x48.png" id="sidebar-logo" alt="Logo"><h1>DocBlox</h1>
+<div style="clear: both"></div>
+</div>
+<div id="sidebar-nav">
+<h3 id="sidebar-dashboard">
+<img class="icon" src="css/docblox/images/icons/dashboard.png" alt="Dashboard"><a href="content.html" class="link" target="content">Dashboard</a>
+</h3>
+<div style="display: none"></div>
+<h3 id="sidebar-files">
+<img src="css/docblox/images/icons/files.png" alt="Files"><a href="#files">Files</a>
+</h3>
+<div class="sidebar-section">
+<div class="search-bar">
+<a href="#" onclick="$(this).parent().next().find('.collapsable-hitarea').click(); return false;"><img src="images/collapse_all.png" title="Collapse all" alt="Collapse all"></a><a href="#" onclick="$(this).parent().next().find('.expandable-hitarea').click(); return false;"><img src="images/expand_all.png" title="Expand all" alt="Expand all"></a><div><input type="text" onkeyup="tree_search(this);"></div>
+</div>
+<ul class="sidebar-nav-tree">
+<li class="closed">
+<span class="file"><a href="db_base_builder.html" target="content">base_builder.php</a></span><ul id="files_57b6bb3d86a82fed889713de197bd945" class="filetree"><li><span class="class"><a href="db_base_builder.html#%5CpicoMapper%5CBaseBuilder" target="content">BaseBuilder<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_builder_factory.html" target="content">builder_factory.php</a></span><ul id="files_b0af0a104009ac764742fefee064a2c3" class="filetree"><li><span class="class"><a href="db_builder_factory.html#%5CpicoMapper%5CBuilderFactory" target="content">BuilderFactory<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_builders_mysql.html" target="content">builders/mysql.php</a></span><ul id="files_1e44d32dd6c2e0bf278180802628e3ba" class="filetree"><li><span class="class"><a href="db_builders_mysql.html#%5CpicoMapper%5CMysqlBuilder" target="content">MysqlBuilder<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_builders_postgres.html" target="content">builders/postgres.php</a></span><ul id="files_8f542f5c3e26fe62aac25442ad6030bf" class="filetree"><li><span class="class"><a href="db_builders_postgres.html#%5CpicoMapper%5CPostgresBuilder" target="content">PostgresBuilder<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_builders_sqlite.html" target="content">builders/sqlite.php</a></span><ul id="files_e228a93dd1396dbd8ff0d1ec25079c10" class="filetree"><li><span class="class"><a href="db_builders_sqlite.html#%5CpicoMapper%5CSqliteBuilder" target="content">SqliteBuilder<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_collection.html" target="content">collection.php</a></span><ul id="files_b4681739a15e443bcb4853ebb0803fa8" class="filetree"><li><span class="class"><a href="db_collection.html#%5CpicoMapper%5CCollection" target="content">Collection<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_collection_proxy.html" target="content">collection_proxy.php</a></span><ul id="files_1d5545bcd9dca87bc0aafdf212051b25" class="filetree"><li><span class="class"><a href="db_collection_proxy.html#%5CpicoMapper%5CCollectionProxy" target="content">CollectionProxy<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_database.html" target="content">database.php</a></span><ul id="files_91168e38a64df509bb2be3c8c65b84a2" class="filetree">
+<li><span class="class"><a href="db_database.html#%5CpicoMapper%5CDatabaseException" target="content">DatabaseException<br></a></span></li>
+<li><span class="class"><a href="db_database.html#%5CpicoMapper%5CDatabase" target="content">Database<br></a></span></li>
+</ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_metadata.html" target="content">metadata.php</a></span><ul id="files_dcef0eb848447adac67cf7aa611767f4" class="filetree">
+<li><span class="class"><a href="db_metadata.html#%5CpicoMapper%5CMetadataException" target="content">MetadataException<br></a></span></li>
+<li><span class="class"><a href="db_metadata.html#%5CpicoMapper%5CMetadata" target="content">Metadata<br></a></span></li>
+</ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_metadata_parser.html" target="content">metadata_parser.php</a></span><ul id="files_3f9ba01ff80a11e405032545d51aa388" class="filetree"><li><span class="class"><a href="db_metadata_parser.html#%5CpicoMapper%5CMetadataParser" target="content">MetadataParser<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_metadata_storage.html" target="content">metadata_storage.php</a></span><ul id="files_c5ffb7d928a4af49f22fefec15186a79" class="filetree"><li><span class="class"><a href="db_metadata_storage.html#%5CpicoMapper%5CMetadataStorage" target="content">MetadataStorage<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_migration.html" target="content">migration.php</a></span><ul id="files_ccbd8c2a834aa56a36ea98f9f5fa85f4" class="filetree"><li><span class="class"><a href="db_migration.html#%5CpicoMapper%5CMigration" target="content">Migration<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_model.html" target="content">model.php</a></span><ul id="files_6398ae21bcf1a071f7e1d84e25712093" class="filetree">
+<li><span class="class"><a href="db_model.html#%5CpicoMapper%5CModelException" target="content">ModelException<br></a></span></li>
+<li><span class="class"><a href="db_model.html#%5CpicoMapper%5CModel" target="content">Model<br></a></span></li>
+</ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_model_proxy.html" target="content">model_proxy.php</a></span><ul id="files_595ff41495e6e0d4a923c438ab5d3e8a" class="filetree"><li><span class="class"><a href="db_model_proxy.html#%5CpicoMapper%5CModelProxy" target="content">ModelProxy<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_persistence.html" target="content">persistence.php</a></span><ul id="files_c6f0e8697da946c9247010e0fac089e4" class="filetree"><li><span class="class"><a href="db_persistence.html#%5CpicoMapper%5CPersistence" target="content">Persistence<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_picoMapper.html" target="content">picoMapper.php</a></span><ul id="files_f05d812390439a26a1ce70555dc9d7d9" class="filetree"></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_query.html" target="content">query.php</a></span><ul id="files_bd21aac17c3f4cdef93569e230d86133" class="filetree"><li><span class="class"><a href="db_query.html#%5CpicoMapper%5CQuery" target="content">Query<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_resultset.html" target="content">resultset.php</a></span><ul id="files_adab6b1efbc520f041ee48119d4d1b9f" class="filetree"><li><span class="class"><a href="db_resultset.html#%5CpicoMapper%5CResultSet" target="content">ResultSet<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_schema.html" target="content">schema.php</a></span><ul id="files_1077dff878ee4e45c5af1eac04941a38" class="filetree"><li><span class="class"><a href="db_schema.html#%5CpicoMapper%5CSchema" target="content">Schema<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validator.html" target="content">validator.php</a></span><ul id="files_c58b8976b28ea91c45244f59476fa707" class="filetree">
+<li><span class="class"><a href="db_validator.html#%5CpicoMapper%5CValidatorException" target="content">ValidatorException<br></a></span></li>
+<li><span class="class"><a href="db_validator.html#%5CpicoMapper%5CBaseValidator" target="content">BaseValidator<br></a></span></li>
+<li><span class="class"><a href="db_validator.html#%5CpicoMapper%5CValidator" target="content">Validator<br></a></span></li>
+</ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_datetime.html" target="content">validators/datetime.php</a></span><ul id="files_ccf3fcf8f84600ec9c49c40882039186" class="filetree"><li><span class="class"><a href="db_validators_datetime.html#%5CpicoMapper%5CValidators%5CDatetimeValidator" target="content">DatetimeValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_email.html" target="content">validators/email.php</a></span><ul id="files_9e72075d34bcae41214ede9f9ea7af1b" class="filetree"><li><span class="class"><a href="db_validators_email.html#%5CpicoMapper%5CValidators%5CEmailValidator" target="content">EmailValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_greaterThan.html" target="content">validators/greaterThan.php</a></span><ul id="files_642eca994c46905520cc1c8bfef10b23" class="filetree"><li><span class="class"><a href="db_validators_greaterThan.html#%5CpicoMapper%5CValidators%5CGreaterThanValidator" target="content">GreaterThanValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_greaterThanOrEqual.html" target="content">validators/greaterThanOrEqual.php</a></span><ul id="files_ed933a219c1cfc8685e5cb1aa34ee51c" class="filetree"><li><span class="class"><a href="db_validators_greaterThanOrEqual.html#%5CpicoMapper%5CValidators%5CGreaterThanOrEqualValidator" target="content">GreaterThanOrEqualValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_lessThan.html" target="content">validators/lessThan.php</a></span><ul id="files_e4de6e3c1147cd5c674dc3d267d88581" class="filetree"><li><span class="class"><a href="db_validators_lessThan.html#%5CpicoMapper%5CValidators%5CLessThanValidator" target="content">LessThanValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_lessThanOrEqual.html" target="content">validators/lessThanOrEqual.php</a></span><ul id="files_184fb8dbf68a1fa8c0bde7bda3a0fd98" class="filetree"><li><span class="class"><a href="db_validators_lessThanOrEqual.html#%5CpicoMapper%5CValidators%5CLessThanOrEqualValidator" target="content">LessThanOrEqualValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_maxLength.html" target="content">validators/maxLength.php</a></span><ul id="files_5945b6387633de2e83798efeb1b34da6" class="filetree"><li><span class="class"><a href="db_validators_maxLength.html#%5CpicoMapper%5CValidators%5CMaxLengthValidator" target="content">MaxLengthValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_minLength.html" target="content">validators/minLength.php</a></span><ul id="files_d2be4559e2e5155f196e3971a56b89ff" class="filetree"><li><span class="class"><a href="db_validators_minLength.html#%5CpicoMapper%5CValidators%5CMinLengthValidator" target="content">MinLengthValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_numeric.html" target="content">validators/numeric.php</a></span><ul id="files_24c59273ffa36e4675e994457f0db6b2" class="filetree"><li><span class="class"><a href="db_validators_numeric.html#%5CpicoMapper%5CValidators%5CNumericValidator" target="content">NumericValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_postCode.html" target="content">validators/postCode.php</a></span><ul id="files_df3ea5c659bc952f664e5d120603aedd" class="filetree"><li><span class="class"><a href="db_validators_postCode.html#%5CpicoMapper%5CValidators%5CPostCodeValidator" target="content">PostCodeValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_required.html" target="content">validators/required.php</a></span><ul id="files_75da40db29f8bccdeec2d4e177c5c2f6" class="filetree"><li><span class="class"><a href="db_validators_required.html#%5CpicoMapper%5CValidators%5CRequiredValidator" target="content">RequiredValidator<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_validators_unique.html" target="content">validators/unique.php</a></span><ul id="files_4b8a6b2b17a169244b021da604c5f23e" class="filetree"><li><span class="class"><a href="db_validators_unique.html#%5CpicoMapper%5CValidators%5CUniqueValidator" target="content">UniqueValidator<br></a></span></li></ul>
+</li>
+</ul>
+</div>
+<h3 id="sidebar-packages">
+<img src="css/docblox/images/icons/packages.png" alt="Packages"><a href="#packages">Packages</a>
+</h3>
+<div class="sidebar-section sidebar-tree">
+<div class="search-bar">
+<a href="#" onclick="$(this).parent().next().find('.collapsable-hitarea').click(); return false;"><img src="images/collapse_all.png" title="Collapse all" alt="Collapse all"></a><a href="#" onclick="$(this).parent().next().find('.expandable-hitarea').click(); return false;"><img src="images/expand_all.png" title="Expand all" alt="Expand all"></a><div><input type="text" onkeyup="tree_search(this);"></div>
+</div>
+<ul class="sidebar-nav-tree"><li class="closed">
+<span class="folder">Default</span><ul>
+<li><span class="class"><a href="db_base_builder.html#%5CpicoMapper%5CBaseBuilder" target="content">BaseBuilder</a></span></li>
+<li><span class="class"><a href="db_validator.html#%5CpicoMapper%5CBaseValidator" target="content">BaseValidator</a></span></li>
+<li><span class="class"><a href="db_builder_factory.html#%5CpicoMapper%5CBuilderFactory" target="content">BuilderFactory</a></span></li>
+<li><span class="class"><a href="db_collection.html#%5CpicoMapper%5CCollection" target="content">Collection</a></span></li>
+<li><span class="class"><a href="db_collection_proxy.html#%5CpicoMapper%5CCollectionProxy" target="content">CollectionProxy</a></span></li>
+<li><span class="class"><a href="db_database.html#%5CpicoMapper%5CDatabase" target="content">Database</a></span></li>
+<li><span class="class"><a href="db_database.html#%5CpicoMapper%5CDatabaseException" target="content">DatabaseException</a></span></li>
+<li><span class="class"><a href="db_validators_datetime.html#%5CpicoMapper%5CValidators%5CDatetimeValidator" target="content">DatetimeValidator</a></span></li>
+<li><span class="class"><a href="db_validators_email.html#%5CpicoMapper%5CValidators%5CEmailValidator" target="content">EmailValidator</a></span></li>
+<li><span class="class"><a href="db_validators_greaterThanOrEqual.html#%5CpicoMapper%5CValidators%5CGreaterThanOrEqualValidator" target="content">GreaterThanOrEqualValidator</a></span></li>
+<li><span class="class"><a href="db_validators_greaterThan.html#%5CpicoMapper%5CValidators%5CGreaterThanValidator" target="content">GreaterThanValidator</a></span></li>
+<li><span class="class"><a href="db_validators_lessThanOrEqual.html#%5CpicoMapper%5CValidators%5CLessThanOrEqualValidator" target="content">LessThanOrEqualValidator</a></span></li>
+<li><span class="class"><a href="db_validators_lessThan.html#%5CpicoMapper%5CValidators%5CLessThanValidator" target="content">LessThanValidator</a></span></li>
+<li><span class="class"><a href="db_validators_maxLength.html#%5CpicoMapper%5CValidators%5CMaxLengthValidator" target="content">MaxLengthValidator</a></span></li>
+<li><span class="class"><a href="db_metadata.html#%5CpicoMapper%5CMetadata" target="content">Metadata</a></span></li>
+<li><span class="class"><a href="db_metadata.html#%5CpicoMapper%5CMetadataException" target="content">MetadataException</a></span></li>
+<li><span class="class"><a href="db_metadata_parser.html#%5CpicoMapper%5CMetadataParser" target="content">MetadataParser</a></span></li>
+<li><span class="class"><a href="db_metadata_storage.html#%5CpicoMapper%5CMetadataStorage" target="content">MetadataStorage</a></span></li>
+<li><span class="class"><a href="db_migration.html#%5CpicoMapper%5CMigration" target="content">Migration</a></span></li>
+<li><span class="class"><a href="db_validators_minLength.html#%5CpicoMapper%5CValidators%5CMinLengthValidator" target="content">MinLengthValidator</a></span></li>
+<li><span class="class"><a href="db_model.html#%5CpicoMapper%5CModel" target="content">Model</a></span></li>
+<li><span class="class"><a href="db_model.html#%5CpicoMapper%5CModelException" target="content">ModelException</a></span></li>
+<li><span class="class"><a href="db_model_proxy.html#%5CpicoMapper%5CModelProxy" target="content">ModelProxy</a></span></li>
+<li><span class="class"><a href="db_builders_mysql.html#%5CpicoMapper%5CMysqlBuilder" target="content">MysqlBuilder</a></span></li>
+<li><span class="class"><a href="db_validators_numeric.html#%5CpicoMapper%5CValidators%5CNumericValidator" target="content">NumericValidator</a></span></li>
+<li><span class="class"><a href="db_persistence.html#%5CpicoMapper%5CPersistence" target="content">Persistence</a></span></li>
+<li><span class="class"><a href="db_validators_postCode.html#%5CpicoMapper%5CValidators%5CPostCodeValidator" target="content">PostCodeValidator</a></span></li>
+<li><span class="class"><a href="db_builders_postgres.html#%5CpicoMapper%5CPostgresBuilder" target="content">PostgresBuilder</a></span></li>
+<li><span class="class"><a href="db_query.html#%5CpicoMapper%5CQuery" target="content">Query</a></span></li>
+<li><span class="class"><a href="db_validators_required.html#%5CpicoMapper%5CValidators%5CRequiredValidator" target="content">RequiredValidator</a></span></li>
+<li><span class="class"><a href="db_resultset.html#%5CpicoMapper%5CResultSet" target="content">ResultSet</a></span></li>
+<li><span class="class"><a href="db_schema.html#%5CpicoMapper%5CSchema" target="content">Schema</a></span></li>
+<li><span class="class"><a href="db_builders_sqlite.html#%5CpicoMapper%5CSqliteBuilder" target="content">SqliteBuilder</a></span></li>
+<li><span class="class"><a href="db_validators_unique.html#%5CpicoMapper%5CValidators%5CUniqueValidator" target="content">UniqueValidator</a></span></li>
+<li><span class="class"><a href="db_validator.html#%5CpicoMapper%5CValidator" target="content">Validator</a></span></li>
+<li><span class="class"><a href="db_validator.html#%5CpicoMapper%5CValidatorException" target="content">ValidatorException</a></span></li>
+</ul>
+</li></ul>
+</div>
+<h3 id="sidebar-namespaces">
+<img src="css/docblox/images/icons/namespaces.png" alt="Namespaces"><a href="#namespaces">Namespaces</a>
+</h3>
+<div class="sidebar-section sidebar-tree">
+<div class="search-bar">
+<a href="#" onclick="$(this).parent().next().find('.collapsable-hitarea').click(); return false;"><img src="images/collapse_all.png" title="Collapse all" alt="Collapse all"></a><a href="#" onclick="$(this).parent().next().find('.expandable-hitarea').click(); return false;"><img src="images/expand_all.png" title="Expand all" alt="Expand all"></a><div><input type="text" onkeyup="tree_search(this);"></div>
+</div>
+<ul class="sidebar-nav-tree"><li class="closed">
+<span class="folder">picoMapper</span><ul>
+<li class="closed">
+<span class="folder">Validators</span><ul>
+<li><span class="class"><a href="db_validators_datetime.html#%5CpicoMapper%5CValidators%5CDatetimeValidator" target="content">DatetimeValidator</a></span></li>
+<li><span class="class"><a href="db_validators_email.html#%5CpicoMapper%5CValidators%5CEmailValidator" target="content">EmailValidator</a></span></li>
+<li><span class="class"><a href="db_validators_greaterThanOrEqual.html#%5CpicoMapper%5CValidators%5CGreaterThanOrEqualValidator" target="content">GreaterThanOrEqualValidator</a></span></li>
+<li><span class="class"><a href="db_validators_greaterThan.html#%5CpicoMapper%5CValidators%5CGreaterThanValidator" target="content">GreaterThanValidator</a></span></li>
+<li><span class="class"><a href="db_validators_lessThanOrEqual.html#%5CpicoMapper%5CValidators%5CLessThanOrEqualValidator" target="content">LessThanOrEqualValidator</a></span></li>
+<li><span class="class"><a href="db_validators_lessThan.html#%5CpicoMapper%5CValidators%5CLessThanValidator" target="content">LessThanValidator</a></span></li>
+<li><span class="class"><a href="db_validators_maxLength.html#%5CpicoMapper%5CValidators%5CMaxLengthValidator" target="content">MaxLengthValidator</a></span></li>
+<li><span class="class"><a href="db_validators_minLength.html#%5CpicoMapper%5CValidators%5CMinLengthValidator" target="content">MinLengthValidator</a></span></li>
+<li><span class="class"><a href="db_validators_numeric.html#%5CpicoMapper%5CValidators%5CNumericValidator" target="content">NumericValidator</a></span></li>
+<li><span class="class"><a href="db_validators_postCode.html#%5CpicoMapper%5CValidators%5CPostCodeValidator" target="content">PostCodeValidator</a></span></li>
+<li><span class="class"><a href="db_validators_required.html#%5CpicoMapper%5CValidators%5CRequiredValidator" target="content">RequiredValidator</a></span></li>
+<li><span class="class"><a href="db_validators_unique.html#%5CpicoMapper%5CValidators%5CUniqueValidator" target="content">UniqueValidator</a></span></li>
+</ul>
+</li>
+<li><span class="class"><a href="db_base_builder.html#%5CpicoMapper%5CBaseBuilder" target="content">BaseBuilder</a></span></li>
+<li><span class="class"><a href="db_validator.html#%5CpicoMapper%5CBaseValidator" target="content">BaseValidator</a></span></li>
+<li><span class="class"><a href="db_builder_factory.html#%5CpicoMapper%5CBuilderFactory" target="content">BuilderFactory</a></span></li>
+<li><span class="class"><a href="db_collection.html#%5CpicoMapper%5CCollection" target="content">Collection</a></span></li>
+<li><span class="class"><a href="db_collection_proxy.html#%5CpicoMapper%5CCollectionProxy" target="content">CollectionProxy</a></span></li>
+<li><span class="class"><a href="db_database.html#%5CpicoMapper%5CDatabase" target="content">Database</a></span></li>
+<li><span class="class"><a href="db_database.html#%5CpicoMapper%5CDatabaseException" target="content">DatabaseException</a></span></li>
+<li><span class="class"><a href="db_metadata.html#%5CpicoMapper%5CMetadata" target="content">Metadata</a></span></li>
+<li><span class="class"><a href="db_metadata.html#%5CpicoMapper%5CMetadataException" target="content">MetadataException</a></span></li>
+<li><span class="class"><a href="db_metadata_parser.html#%5CpicoMapper%5CMetadataParser" target="content">MetadataParser</a></span></li>
+<li><span class="class"><a href="db_metadata_storage.html#%5CpicoMapper%5CMetadataStorage" target="content">MetadataStorage</a></span></li>
+<li><span class="class"><a href="db_migration.html#%5CpicoMapper%5CMigration" target="content">Migration</a></span></li>
+<li><span class="class"><a href="db_model.html#%5CpicoMapper%5CModel" target="content">Model</a></span></li>
+<li><span class="class"><a href="db_model.html#%5CpicoMapper%5CModelException" target="content">ModelException</a></span></li>
+<li><span class="class"><a href="db_model_proxy.html#%5CpicoMapper%5CModelProxy" target="content">ModelProxy</a></span></li>
+<li><span class="class"><a href="db_builders_mysql.html#%5CpicoMapper%5CMysqlBuilder" target="content">MysqlBuilder</a></span></li>
+<li><span class="class"><a href="db_persistence.html#%5CpicoMapper%5CPersistence" target="content">Persistence</a></span></li>
+<li><span class="class"><a href="db_builders_postgres.html#%5CpicoMapper%5CPostgresBuilder" target="content">PostgresBuilder</a></span></li>
+<li><span class="class"><a href="db_query.html#%5CpicoMapper%5CQuery" target="content">Query</a></span></li>
+<li><span class="class"><a href="db_resultset.html#%5CpicoMapper%5CResultSet" target="content">ResultSet</a></span></li>
+<li><span class="class"><a href="db_schema.html#%5CpicoMapper%5CSchema" target="content">Schema</a></span></li>
+<li><span class="class"><a href="db_builders_sqlite.html#%5CpicoMapper%5CSqliteBuilder" target="content">SqliteBuilder</a></span></li>
+<li><span class="class"><a href="db_validator.html#%5CpicoMapper%5CValidator" target="content">Validator</a></span></li>
+<li><span class="class"><a href="db_validator.html#%5CpicoMapper%5CValidatorException" target="content">ValidatorException</a></span></li>
+</ul>
+</li></ul>
+</div>
+<h3 id="sidebar-charts">
+<img src="css/docblox/images/icons/chart.png" alt="Charts"><a href="#charts">Charts</a>
+</h3>
+<div class="sidebar-section"><ul style="list-style-image: url('css/docblox/images/icons/chart15x12.png');"><li><a href="graph.html" target="content">Class Inheritance Diagram</a></li></ul></div>
+<h3 id="sidebar-reports">
+<img src="css/docblox/images/icons/reports.png" alt="Reports"><a href="#reports">Reports</a>
+</h3>
+<div class="sidebar-section"><ul style="list-style-image: url('css/docblox/images/icons/reports9x12.png');">
+<li><a href="report_markers.html" target="content">Markers (TODO/FIXME)</a></li>
+<li><a href="report_parse_markers.html" target="content">Parsing errors</a></li>
+<li><a href="report_deprecated.html" target="content">Deprecated elements</a></li>
+</ul></div>
+</div>
+<div id="sidebar-footer">
+        Documentation is generated by <a href="http://docblox-project.org" target="_top"><img src="images/icon48x48.png" height="12" align="top" alt="Logo"> DocBlox 0.18.1</a>, images courtesy of <a href="http://glyphish.com/" target="_top">Glyphish</a>
+</div>
+</div></body></html>

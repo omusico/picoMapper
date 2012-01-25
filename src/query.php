@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of picoMapper.
+ *
+ * (c) Frédéric Guillot http://fguillot.fr
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace picoMapper;
 
 
@@ -142,6 +151,9 @@ class Query {
      * Build ORDER BY condition
      *
      * @access public
+     * @param string $name Column name
+     * @param string $model Model name
+     * @param string $direction Direction: ASC or DESC
      */
     public function buildOrderCondition($name, $model, $direction) {
 
@@ -368,10 +380,11 @@ class Query {
     /**
      * Execute a DELETE command
      *
-     * Example: Model::Query()->delete('id = ?', 5);
+     * Usage: Model::Query()->delete('id = ?', 5);
+     *
+     * Don't put the model name in the condition
      *
      * @access public
-     * @param mixed $arguments Variable arguments list
      */
     public function delete() {
 
@@ -397,7 +410,6 @@ class Query {
      * Select only specified columns
      *
      * @access public
-     * @param string $arguments Variable arguments list
      * @return \picoMapper\Query Current instance
      */
     public function fields() {
@@ -451,8 +463,9 @@ class Query {
     /**
      * Add a where condition
      *
+     * Usage: where('Model.column = ? AND Model.column != ?', 'a', 'b')
+     *
      * @access public
-     * @param mixed $arguments Variables arguments list
      * @return \picoMapper\Query Current instance
      */
     public function where() {

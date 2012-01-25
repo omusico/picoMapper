@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of picoMapper.
+ *
+ * (c) Frédéric Guillot http://fguillot.fr
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace picoMapper;
 
 
@@ -187,6 +196,7 @@ class ModelProxy {
      * Check if property exists inside the proxified class
      *
      * @access public
+     * @param string $name Property name
      * @return boolean True if exists
      */
     public function __isset($name) {
@@ -201,6 +211,8 @@ class ModelProxy {
      * Call all unknown methods to the proxified class
      *
      * @access public
+     * @param string $name Method name
+     * @param array $arguments Method arguments
      * @return mixed
      */
     public function __call($name, $arguments) {

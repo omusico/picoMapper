@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of picoMapper.
+ *
+ * (c) Frédéric Guillot http://fguillot.fr
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace picoMapper;
 
 
@@ -121,6 +130,7 @@ class Metadata {
      * Constructor
      *
      * @access public
+     * @param array $metadata Parsed metadata
      */
     public function __construct(array $metadata) {
 
@@ -397,7 +407,7 @@ class Metadata {
      * If there is no defined foreign key, this method return "modelname_id"
      *
      * @access public
-     * @param string $name Model name
+     * @param string $model Model name
      * @return string Foreign key
      */
     public function getForeignKey($model) {
