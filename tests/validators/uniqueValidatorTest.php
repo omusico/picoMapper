@@ -70,5 +70,27 @@ class UniqueValidatorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(array(), $model->getErrors());
     }
 
+
+    public function testSaveUniqueOnUpdate() {
+
+        $model = new UniqueModel();
+        $model->id = 1;
+        $model->name = 'toto';
+        
+        $v = new \picoMapper\Validators\UniqueValidator();
+        $rs = $v->execute($model, 'name');
+
+        $this->assertTrue($rs);
+        $this->assertEquals(array(), $model->getErrors());
+
+        $model = new UniqueModel();
+        $model->name = 'toto';
+        
+        $v = new \picoMapper\Validators\UniqueValidator();
+        $rs = $v->execute($model, 'name');
+
+        $this->assertFalse($rs);
+        $this->assertEquals(array('name' => array('This field must be unique')), $model->getErrors());
+    }
 }
 

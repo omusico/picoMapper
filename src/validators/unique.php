@@ -30,8 +30,28 @@ class UniqueValidator extends \picoMapper\BaseValidator {
      */
     public function execute(&$modelInstance, $column, $args = array()) {
 
-        $method = 'countBy'.$column;
-        $rs = $modelInstance::$method($modelInstance->$column);
+        $metadata = \picoMapper\MetadataStorage::get(get_class($modelInstance));
+        $primaryKey = $metadata->getPrimaryKey();
+        $modelName = $metadata->getModelName();
+        $query = new \picoMapper\Query($modelName); 
+
+        if ($modelInstance->$primaryKey) {
+
+            // On update, we exclude the current record
+
+            $rs = $query
+                ->where(
+                    sprintf('%s.%s = ? AND %s.%s != ?', $modelName, $column, $modelName, $primaryKey),
+                    $modelInstance->$column, $modelInstance->$primaryKey
+                )
+                ->count();
+        }
+        else {
+
+            $rs = $query
+                ->where(sprintf('%s.%s = ?', $modelName, $column), $modelInstance->$column)
+                ->count();
+        }
 
         if ($rs >= 1) {
 
