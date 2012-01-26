@@ -154,19 +154,11 @@ class SqliteBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testLimit() {
+    public function testLimitOffset() {
 
-        $builder = new \picoMapper\SqliteBuilder();
+        $builder = new \picoMapper\MysqlBuilder();
 
-        $this->assertEquals(' LIMIT ?', $builder->addLimit());
-    }
-
-
-    public function testOffset() {
-
-        $builder = new \picoMapper\SqliteBuilder();
-
-        $this->assertEquals(' OFFSET ?', $builder->addOffset());
+        $this->assertEquals(' LIMIT ? OFFSET ?', $builder->addLimitOffset());
     }
 
 

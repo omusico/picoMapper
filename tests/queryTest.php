@@ -97,33 +97,6 @@ class QueryTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testBuildFetchAllOffset() {
-
-        $q = new \picoMapper\Query('ModelQA');
-
-        $q->offset('r');
-        $sql = $q->buildSelectQuery();
-
-        $this->assertEquals(
-            'SELECT "ModelQA"."primary_a", "ModelQA"."data" FROM "model_a" AS "ModelQA"',
-            $sql
-        );
-
-        $q->offset(10);
-        $sql = $q->buildSelectQuery();
-
-        $this->assertEquals(
-            'SELECT "ModelQA"."primary_a", "ModelQA"."data" FROM "model_a" AS "ModelQA" OFFSET ?',
-            $sql
-        );
-
-        $this->assertEquals(
-            array(10),
-            $q->getParameters()
-        );
-    }
-
-
     public function testBuildFetchAllLimit() {
 
         $q = new \picoMapper\Query('ModelQA');
@@ -136,16 +109,54 @@ class QueryTest extends PHPUnit_Framework_TestCase {
             $sql
         );
 
+        $q = new \picoMapper\Query('ModelQA');
+        $q->limit('r', 'bla');
+        $sql = $q->buildSelectQuery();
+
+        $this->assertEquals(
+            'SELECT "ModelQA"."primary_a", "ModelQA"."data" FROM "model_a" AS "ModelQA"',
+            $sql
+        );
+
+        $q = new \picoMapper\Query('ModelQA');
         $q->limit(10);
         $sql = $q->buildSelectQuery();
 
         $this->assertEquals(
-            'SELECT "ModelQA"."primary_a", "ModelQA"."data" FROM "model_a" AS "ModelQA" LIMIT ?',
+            'SELECT "ModelQA"."primary_a", "ModelQA"."data" FROM "model_a" AS "ModelQA" LIMIT ? OFFSET ?',
             $sql
         );
 
         $this->assertEquals(
-            array(10),
+            array(10, 0),
+            $q->getParameters()
+        );
+
+        $q = new \picoMapper\Query('ModelQA');
+        $q->limit(10)->offset(5);
+        $sql = $q->buildSelectQuery();
+
+        $this->assertEquals(
+            'SELECT "ModelQA"."primary_a", "ModelQA"."data" FROM "model_a" AS "ModelQA" LIMIT ? OFFSET ?',
+            $sql
+        );
+
+        $this->assertEquals(
+            array(10, 5),
+            $q->getParameters()
+        );
+
+        $q = new \picoMapper\Query('ModelQA');
+        $q->limit(10, 5);
+        $sql = $q->buildSelectQuery();
+
+        $this->assertEquals(
+            'SELECT "ModelQA"."primary_a", "ModelQA"."data" FROM "model_a" AS "ModelQA" LIMIT ? OFFSET ?',
+            $sql
+        );
+
+        $this->assertEquals(
+            array(10, 5),
             $q->getParameters()
         );
     }
@@ -332,8 +343,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
 
         $q = new \picoMapper\Query('ModelQA');
         $q->where('ModelQB.data >= ? OR ModelQA.data = ? OR ModelQB.content LIKE ?', 'toto', 2, 'titi')
-          ->offset(5)
-          ->limit(10)
+          ->limit(10, 5)
           ->desc('content', 'ModelQB');
 
         $this->assertEquals(

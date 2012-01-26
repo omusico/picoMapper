@@ -38,7 +38,7 @@ class BuilderFactory {
             case 'sqlite':
                 return new SqliteBuilder();
 
-            case 'postgres':
+            case 'pgsql':
                 return new PostgresBuilder();
 
             case 'mysql':

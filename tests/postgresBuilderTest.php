@@ -154,19 +154,11 @@ class PostgresBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testLimit() {
+    public function testLimitOffset() {
 
-        $builder = new \picoMapper\PostgresBuilder();
+        $builder = new \picoMapper\MysqlBuilder();
 
-        $this->assertEquals(' LIMIT ?', $builder->addLimit());
-    }
-
-
-    public function testOffset() {
-
-        $builder = new \picoMapper\PostgresBuilder();
-
-        $this->assertEquals(' OFFSET ?', $builder->addOffset());
+        $this->assertEquals(' LIMIT ? OFFSET ?', $builder->addLimitOffset());
     }
 
 

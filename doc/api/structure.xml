@@ -1954,7 +1954,7 @@ Get the number of records: Model::count()</p>]]></long-description>
       </method>
     </class>
   </file>
-  <file path="base_builder.php" hash="57b6bb3d86a82fed889713de197bd945">
+  <file path="base_builder.php" hash="96b497576ea31159f945a41d5e9310ae">
     <parse_markers>
       <error line="1" code="50007">No page-level DocBlock was found in file base_builder.php</error>
     </parse_markers>
@@ -2244,10 +2244,10 @@ Get the number of records: Model::count()</p>]]></long-description>
         </argument>
       </method>
       <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="241" package="Default">
-        <name>addLimit</name>
+        <name>addLimitOffset</name>
         <type>function</type>
         <docblock line="235">
-          <description><![CDATA[Add a LIMIT clause for a SELECT command]]></description>
+          <description><![CDATA[Add a LIMIT/OFFSET clause for a SELECT command]]></description>
           <long-description><![CDATA[]]></long-description>
           <tag line="235" name="access" description="public"/>
           <tag line="235" name="return" description="Generated SQL" type="string">
@@ -2255,277 +2255,265 @@ Get the number of records: Model::count()</p>]]></long-description>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="253" package="Default">
-        <name>addOffset</name>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="254" package="Default">
+        <name>addWhere</name>
         <type>function</type>
         <docblock line="247">
-          <description><![CDATA[Add a OFFSET clause for a SELECT command]]></description>
+          <description><![CDATA[Add a WHERE condition for a SELECT command]]></description>
           <long-description><![CDATA[]]></long-description>
           <tag line="247" name="access" description="public"/>
+          <tag line="247" name="param" description="SQL generated condition" type="string" variable="$where">
+            <type by_reference="false">string</type>
+          </tag>
           <tag line="247" name="return" description="Generated SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="266" package="Default">
-        <name>addWhere</name>
-        <type>function</type>
-        <docblock line="259">
-          <description><![CDATA[Add a WHERE condition for a SELECT command]]></description>
-          <long-description><![CDATA[]]></long-description>
-          <tag line="259" name="access" description="public"/>
-          <tag line="259" name="param" description="SQL generated condition" type="string" variable="$where">
-            <type by_reference="false">string</type>
-          </tag>
-          <tag line="259" name="return" description="Generated SQL" type="string">
-            <type by_reference="false">string</type>
-          </tag>
-        </docblock>
-        <argument line="266">
+        <argument line="254">
           <name>$where</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="281" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="269" package="Default">
         <name>addOrder</name>
         <type>function</type>
-        <docblock line="272">
+        <docblock line="260">
           <description><![CDATA[Add a ORDER clause for a SELECT command]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="272" name="access" description="public"/>
-          <tag line="272" name="param" description="Alias" type="string" variable="$alias">
+          <tag line="260" name="access" description="public"/>
+          <tag line="260" name="param" description="Alias" type="string" variable="$alias">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="272" name="param" description="Column name" type="string" variable="$column">
+          <tag line="260" name="param" description="Column name" type="string" variable="$column">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="272" name="param" description="ASC or DESC" type="string" variable="$direction">
+          <tag line="260" name="param" description="ASC or DESC" type="string" variable="$direction">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="272" name="return" description="Generated SQL" type="string">
+          <tag line="260" name="return" description="Generated SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="281">
+        <argument line="269">
           <name>$alias</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="281">
+        <argument line="269">
           <name>$column</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="281">
+        <argument line="269">
           <name>$direction</name>
           <default><![CDATA['ASC']]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="306" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="294" package="Default">
         <name>foreignKey</name>
         <type>function</type>
-        <docblock line="296">
+        <docblock line="284">
           <description><![CDATA[Generate a foreign key reference for a CREATE TABLE]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="296" name="access" description="public"/>
-          <tag line="296" name="param" description="Referenced table" type="string" variable="$table">
+          <tag line="284" name="access" description="public"/>
+          <tag line="284" name="param" description="Referenced table" type="string" variable="$table">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="296" name="param" description="Referenced column name" type="string" variable="$column">
+          <tag line="284" name="param" description="Referenced column name" type="string" variable="$column">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="296" name="param" description="Add ON DELETE CASCADE" type="bool" variable="$onDelete">
+          <tag line="284" name="param" description="Add ON DELETE CASCADE" type="bool" variable="$onDelete">
             <type by_reference="false">bool</type>
           </tag>
-          <tag line="296" name="param" description="Add ON UPDATE CASCADE" type="bool" variable="$onUpdate">
+          <tag line="284" name="param" description="Add ON UPDATE CASCADE" type="bool" variable="$onUpdate">
             <type by_reference="false">bool</type>
           </tag>
-          <tag line="296" name="return" description="Generated SQL" type="string">
+          <tag line="284" name="return" description="Generated SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="306">
+        <argument line="294">
           <name>$table</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="306">
+        <argument line="294">
           <name>$column</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="306">
+        <argument line="294">
           <name>$onDelete</name>
           <default><![CDATA[false]]></default>
           <type/>
         </argument>
-        <argument line="306">
+        <argument line="294">
           <name>$onUpdate</name>
           <default><![CDATA[false]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="338" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="326" package="Default">
         <name>addColumn</name>
         <type>function</type>
-        <docblock line="329">
+        <docblock line="317">
           <description><![CDATA[Add a column to a table]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="329" name="access" description="public"/>
-          <tag line="329" name="param" description="Table name" type="string" variable="$table">
+          <tag line="317" name="access" description="public"/>
+          <tag line="317" name="param" description="Table name" type="string" variable="$table">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="329" name="param" description="Column name" type="string" variable="$name">
+          <tag line="317" name="param" description="Column name" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="329" name="param" description="Column type" type="string" variable="$type">
+          <tag line="317" name="param" description="Column type" type="string" variable="$type">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="329" name="return" description="Generated SQL" type="string">
+          <tag line="317" name="return" description="Generated SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="338">
+        <argument line="326">
           <name>$table</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="338">
+        <argument line="326">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="338">
+        <argument line="326">
           <name>$type</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="356" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="344" package="Default">
         <name>dropColumn</name>
         <type>function</type>
-        <docblock line="348">
+        <docblock line="336">
           <description><![CDATA[Remove a column from a table]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="348" name="access" description="public"/>
-          <tag line="348" name="param" description="Table name" type="string" variable="$table">
+          <tag line="336" name="access" description="public"/>
+          <tag line="336" name="param" description="Table name" type="string" variable="$table">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="348" name="param" description="Column name" type="string" variable="$column">
+          <tag line="336" name="param" description="Column name" type="string" variable="$column">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="348" name="return" description="Generated SQL" type="string">
+          <tag line="336" name="return" description="Generated SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="356">
+        <argument line="344">
           <name>$table</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="356">
+        <argument line="344">
           <name>$column</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="375" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="363" package="Default">
         <name>addIndex</name>
         <type>function</type>
-        <docblock line="366">
+        <docblock line="354">
           <description><![CDATA[Add an index]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="366" name="access" description="public"/>
-          <tag line="366" name="param" description="Index name" type="string" variable="$name">
+          <tag line="354" name="access" description="public"/>
+          <tag line="354" name="param" description="Index name" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="366" name="param" description="Table name" type="string" variable="$table">
+          <tag line="354" name="param" description="Table name" type="string" variable="$table">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="366" name="param" description="Column name" type="string" variable="$column">
+          <tag line="354" name="param" description="Column name" type="string" variable="$column">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="366" name="return" description="Generated SQL" type="string">
+          <tag line="354" name="return" description="Generated SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="375">
+        <argument line="363">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="375">
+        <argument line="363">
           <name>$table</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="375">
+        <argument line="363">
           <name>$column</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="394" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="382" package="Default">
         <name>dropIndex</name>
         <type>function</type>
-        <docblock line="386">
+        <docblock line="374">
           <description><![CDATA[Remove an index]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="386" name="access" description="public"/>
-          <tag line="386" name="param" description="Index name" type="string" variable="$name">
+          <tag line="374" name="access" description="public"/>
+          <tag line="374" name="param" description="Index name" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="386" name="param" description="Table name" type="string" variable="$table">
+          <tag line="374" name="param" description="Table name" type="string" variable="$table">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="386" name="return" description="Generated SQL" type="string">
+          <tag line="374" name="return" description="Generated SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="394">
+        <argument line="382">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="394">
+        <argument line="382">
           <name>$table</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="412" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="400" package="Default">
         <name>addUnique</name>
         <type>function</type>
-        <docblock line="403">
+        <docblock line="391">
           <description><![CDATA[Add an unique constraint for one or many columns]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="403" name="access" description="public"/>
-          <tag line="403" name="param" description="Index name" type="string" variable="$name">
+          <tag line="391" name="access" description="public"/>
+          <tag line="391" name="param" description="Index name" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="403" name="param" description="Table name" type="string" variable="$table">
+          <tag line="391" name="param" description="Table name" type="string" variable="$table">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="403" name="param" description="Column name or list of columns name" type="mixed" variable="$columns">
+          <tag line="391" name="param" description="Column name or list of columns name" type="mixed" variable="$columns">
             <type by_reference="false">mixed</type>
           </tag>
-          <tag line="403" name="return" description="Generated SQL" type="string">
+          <tag line="391" name="return" description="Generated SQL" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="412">
+        <argument line="400">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="412">
+        <argument line="400">
           <name>$table</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="412">
+        <argument line="400">
           <name>$columns</name>
           <default><![CDATA[]]></default>
           <type/>
@@ -2739,7 +2727,7 @@ Get the number of records: Model::count()</p>]]></long-description>
       </method>
     </class>
   </file>
-  <file path="query.php" hash="bd21aac17c3f4cdef93569e230d86133">
+  <file path="query.php" hash="51a1dca01499e1b7db6741b59019b17e">
     <parse_markers>
       <error line="1" code="50007">No page-level DocBlock was found in file query.php</error>
     </parse_markers>
@@ -2838,7 +2826,7 @@ Get the number of records: Model::count()</p>]]></long-description>
       </property>
       <property final="false" static="false" visibility="private" line="91" package="Default">
         <name>$offset</name>
-        <default><![CDATA[null]]></default>
+        <default><![CDATA[0]]></default>
         <docblock line="85">
           <description><![CDATA[Offset value]]></description>
           <long-description><![CDATA[]]></long-description>
@@ -2993,188 +2981,197 @@ Get the number of records: Model::count()</p>]]></long-description>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="298" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="293" package="Default">
         <name>count</name>
         <type>function</type>
-        <docblock line="292">
+        <docblock line="287">
           <description><![CDATA[Execute a SELECT COUNT(*) query]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="292" name="access" description="public"/>
-          <tag line="292" name="return" description="" type="\picoMapper\Collection">
+          <tag line="287" name="access" description="public"/>
+          <tag line="287" name="return" description="" type="\picoMapper\Collection">
             <type by_reference="false">\picoMapper\Collection</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="329" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="323" package="Default">
         <name>fetchAll</name>
         <type>function</type>
-        <docblock line="323">
+        <docblock line="317">
           <description><![CDATA[Execute a SELECT query]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="323" name="access" description="public"/>
-          <tag line="323" name="return" description="" type="\picoMapper\Collection">
+          <tag line="317" name="access" description="public"/>
+          <tag line="317" name="return" description="" type="\picoMapper\Collection">
             <type by_reference="false">\picoMapper\Collection</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="359" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="351" package="Default">
         <name>fetchOne</name>
         <type>function</type>
-        <docblock line="353">
+        <docblock line="345">
           <description><![CDATA[Execute a SELECT query and force the limit value at 1]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="353" name="access" description="public"/>
-          <tag line="353" name="return" description="Model instance" type="object">
+          <tag line="345" name="access" description="public"/>
+          <tag line="345" name="return" description="Model instance" type="object">
             <type by_reference="false">object</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="389" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="378" package="Default">
         <name>delete</name>
         <type>function</type>
-        <docblock line="380">
+        <docblock line="369">
           <description><![CDATA[Execute a DELETE command]]></description>
           <long-description><![CDATA[<p>Usage: Model::Query()->delete('id = ?', 5);</p>
 
 <p>Don't put the model name in the condition</p>]]></long-description>
-          <tag line="380" name="access" description="public"/>
+          <tag line="369" name="access" description="public"/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="401" package="Default">
+        <name>fields</name>
+        <type>function</type>
+        <docblock line="395">
+          <description><![CDATA[Select only specified columns]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="395" name="access" description="public"/>
+          <tag line="395" name="return" description="Current instance" type="\picoMapper\Query">
+            <type by_reference="false">\picoMapper\Query</type>
+          </tag>
         </docblock>
       </method>
       <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="415" package="Default">
-        <name>fields</name>
-        <type>function</type>
-        <docblock line="409">
-          <description><![CDATA[Select only specified columns]]></description>
-          <long-description><![CDATA[]]></long-description>
-          <tag line="409" name="access" description="public"/>
-          <tag line="409" name="return" description="Current instance" type="\picoMapper\Query">
-            <type by_reference="false">\picoMapper\Query</type>
-          </tag>
-        </docblock>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="429" package="Default">
         <name>join</name>
         <type>function</type>
-        <docblock line="422">
+        <docblock line="408">
           <description><![CDATA[Add a left join]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="422" name="access" description="public"/>
-          <tag line="422" name="param" description="Model name to join" type="string" variable="$model">
+          <tag line="408" name="access" description="public"/>
+          <tag line="408" name="param" description="Model name to join" type="string" variable="$model">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="422" name="return" description="Current instance" type="\picoMapper\Query">
+          <tag line="408" name="return" description="Current instance" type="\picoMapper\Query">
             <type by_reference="false">\picoMapper\Query</type>
           </tag>
         </docblock>
-        <argument line="429">
+        <argument line="415">
           <name>$model</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="471" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="457" package="Default">
         <name>where</name>
         <type>function</type>
-        <docblock line="463">
+        <docblock line="449">
           <description><![CDATA[Add a where condition]]></description>
           <long-description><![CDATA[<p>Usage: where('Model.column = ? AND Model.column != ?', 'a', 'b')</p>]]></long-description>
-          <tag line="463" name="access" description="public"/>
-          <tag line="463" name="return" description="Current instance" type="\picoMapper\Query">
+          <tag line="449" name="access" description="public"/>
+          <tag line="449" name="return" description="Current instance" type="\picoMapper\Query">
             <type by_reference="false">\picoMapper\Query</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="508" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="494" package="Default">
         <name>asc</name>
         <type>function</type>
-        <docblock line="500">
+        <docblock line="486">
           <description><![CDATA[Add order condition to the query (ASC)]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="500" name="access" description="public"/>
-          <tag line="500" name="param" description="Column name" type="string" variable="$name">
+          <tag line="486" name="access" description="public"/>
+          <tag line="486" name="param" description="Column name" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="500" name="param" description="Model name to apply the order command" type="string" variable="$model">
+          <tag line="486" name="param" description="Model name to apply the order command" type="string" variable="$model">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="500" name="return" description="Current instance" type="\picoMapper\Query">
+          <tag line="486" name="return" description="Current instance" type="\picoMapper\Query">
             <type by_reference="false">\picoMapper\Query</type>
           </tag>
         </docblock>
-        <argument line="508">
+        <argument line="494">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="508">
+        <argument line="494">
           <name>$model</name>
           <default><![CDATA['']]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="524" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="510" package="Default">
         <name>desc</name>
         <type>function</type>
-        <docblock line="516">
+        <docblock line="502">
           <description><![CDATA[Add order condition to the query (DESC)]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="516" name="access" description="public"/>
-          <tag line="516" name="param" description="Column name" type="string" variable="$name">
+          <tag line="502" name="access" description="public"/>
+          <tag line="502" name="param" description="Column name" type="string" variable="$name">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="516" name="param" description="Model name to apply the order command" type="string" variable="$model">
+          <tag line="502" name="param" description="Model name to apply the order command" type="string" variable="$model">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="516" name="return" description="Current instance" type="\picoMapper\Query">
+          <tag line="502" name="return" description="Current instance" type="\picoMapper\Query">
             <type by_reference="false">\picoMapper\Query</type>
           </tag>
         </docblock>
-        <argument line="524">
+        <argument line="510">
           <name>$name</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
-        <argument line="524">
+        <argument line="510">
           <name>$model</name>
           <default><![CDATA['']]></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="538" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="525" package="Default">
         <name>limit</name>
         <type>function</type>
-        <docblock line="531">
+        <docblock line="517">
           <description><![CDATA[Add a limit condition to the query]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="531" name="access" description="public"/>
-          <tag line="531" name="param" description="Limit value" type="integer" variable="$limit">
+          <tag line="517" name="access" description="public"/>
+          <tag line="517" name="param" description="Limit value" type="integer" variable="$limit">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="531" name="return" description="Current instance" type="\picoMapper\Query">
+          <tag line="517" name="param" description="Offset value" type="integer" variable="$offset">
+            <type by_reference="false">integer</type>
+          </tag>
+          <tag line="517" name="return" description="Current instance" type="\picoMapper\Query">
             <type by_reference="false">\picoMapper\Query</type>
           </tag>
         </docblock>
-        <argument line="538">
+        <argument line="525">
           <name>$limit</name>
           <default><![CDATA[]]></default>
           <type/>
         </argument>
+        <argument line="525">
+          <name>$offset</name>
+          <default><![CDATA[0]]></default>
+          <type/>
+        </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="553" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="542" package="Default">
         <name>offset</name>
         <type>function</type>
-        <docblock line="546">
-          <description><![CDATA[Add an offset condition to the query]]></description>
+        <docblock line="534">
+          <description><![CDATA[Add an offset condition to the query
+Work only if there is a limit value]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="546" name="access" description="public"/>
-          <tag line="546" name="param" description="Offset" type="integer" variable="$offset">
+          <tag line="534" name="access" description="public"/>
+          <tag line="534" name="param" description="Offset value" type="integer" variable="$offset">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="546" name="return" description="Current instance" type="\picoMapper\Query">
+          <tag line="534" name="return" description="Current instance" type="\picoMapper\Query">
             <type by_reference="false">\picoMapper\Query</type>
           </tag>
         </docblock>
-        <argument line="553">
+        <argument line="542">
           <name>$offset</name>
           <default><![CDATA[]]></default>
           <type/>
@@ -3772,7 +3769,7 @@ Get the number of records: Model::count()</p>]]></long-description>
       </method>
     </class>
   </file>
-  <file path="database.php" hash="91168e38a64df509bb2be3c8c65b84a2">
+  <file path="database.php" hash="f7e1fbba127f456a436468de96f1de33">
     <parse_markers>
       <error line="1" code="50007">No page-level DocBlock was found in file database.php</error>
     </parse_markers>
@@ -3914,9 +3911,64 @@ Get the number of records: Model::count()</p>]]></long-description>
           <tag line="122" name="static" description=""/>
         </docblock>
       </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="picoMapper" line="142" package="Default">
+        <name>bindValues</name>
+        <type>function</type>
+        <docblock line="134">
+          <description><![CDATA[Bind all parameters with the correct type]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="134" name="access" description="public"/>
+          <tag line="134" name="static" description=""/>
+          <tag line="134" name="param" description="PDO statement" type="\picoMapper\PDOStatement" variable="$statement">
+            <type by_reference="false">\picoMapper\PDOStatement</type>
+          </tag>
+          <tag line="134" name="param" description="List of parameters" type="array" variable="$values">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+        <argument line="142">
+          <name>$statement</name>
+          <default><![CDATA[]]></default>
+          <type>PDOStatement</type>
+        </argument>
+        <argument line="142">
+          <name>$values</name>
+          <default><![CDATA[]]></default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="picoMapper" line="177" package="Default">
+        <name>execute</name>
+        <type>function</type>
+        <docblock line="168">
+          <description><![CDATA[Execute a prepared statement]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="168" name="access" description="public"/>
+          <tag line="168" name="static" description=""/>
+          <tag line="168" name="param" description="SQL request with ? placeholders" type="string" variable="$sql">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="168" name="param" description="List of parameters" type="array" variable="$values">
+            <type by_reference="false">array</type>
+          </tag>
+          <tag line="168" name="return" description="" type="\picoMapper\PDOStatement">
+            <type by_reference="false">\picoMapper\PDOStatement</type>
+          </tag>
+        </docblock>
+        <argument line="177">
+          <name>$sql</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="177">
+          <name>$values</name>
+          <default><![CDATA[]]></default>
+          <type>array</type>
+        </argument>
+      </method>
     </class>
   </file>
-  <file path="persistence.php" hash="c6f0e8697da946c9247010e0fac089e4">
+  <file path="persistence.php" hash="d6638b92e80b691c2328b73d4caa4f5a">
     <parse_markers>
       <error line="1" code="50007">No page-level DocBlock was found in file persistence.php</error>
     </parse_markers>
@@ -4007,26 +4059,26 @@ Get the number of records: Model::count()</p>]]></long-description>
           <tag line="83" name="access" description="public"/>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="150" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="picoMapper" line="140" package="Default">
         <name>saveAll</name>
         <type>function</type>
-        <docblock line="143">
+        <docblock line="133">
           <description><![CDATA[Save the model and all relations]]></description>
           <long-description><![CDATA[]]></long-description>
-          <tag line="143" name="access" description="public"/>
-          <tag line="143" name="param" description="Set to true if you are already in a transaction" type="boolean" variable="$inTransaction">
+          <tag line="133" name="access" description="public"/>
+          <tag line="133" name="param" description="Set to true if you are already in a transaction" type="boolean" variable="$inTransaction">
             <type by_reference="false">boolean</type>
           </tag>
-          <tag line="143" name="param" description="Set to true to validate model before save" type="boolean" variable="$validate">
+          <tag line="133" name="param" description="Set to true to validate model before save" type="boolean" variable="$validate">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
-        <argument line="150">
+        <argument line="140">
           <name>$inTransaction</name>
           <default><![CDATA[false]]></default>
           <type/>
         </argument>
-        <argument line="150">
+        <argument line="140">
           <name>$validate</name>
           <default><![CDATA[true]]></default>
           <type/>

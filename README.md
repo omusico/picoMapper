@@ -12,19 +12,21 @@ Features
 
 - Very easy to configure, we use annotations for model description
 - Easy to use: ActiveRecord pattern, inspired from Ruby on Rails
-- Support model relations: has one, has many, belongs to
+- Support relations: has one, has many, belongs to
 - Lightweight, relations are loaded only if necessary (lazy loading)
 - Data validation
 - Migrations
 - Tested, almost everything have a unit test
 - Use PDO and only prepared statement
+- No code generation
+
 
 Requirements
 ------------
 
 - PHP >= 5.3
 - PDO drivers: Sqlite, Mysql, Postgresql
-
+- Mysql >= 5.1 or Sqlite 3.x or Postgresql >= 9.1
 
 Author
 ------

@@ -236,12 +236,12 @@
 </div>
 <a id="\picoMapper\Query::$offset" class="anchor"></a><div class="property private">
 <a href="#" class="gripper"><img src="images/icons/arrow_right.png"><img src="images/icons/arrow_down.png" style="display: none;"></a><code><img src="images/icons/property.png" alt="Property"><img src="images/icons/visibility_private.png" style="margin-right: 5px" alt="private">integer
-                 <span class="highlight">$offset</span>= 'null'
+                 <span class="highlight">$offset</span>= '0'
                 </code><div class="description">
 <p class="short-description">Offset value</p></div>
 <div class="code-tabs">
 <div class="long-description"></div>
-<strong>Default value</strong><code>null</code><strong>Details</strong><dl class="property-info">
+<strong>Default value</strong><code>0</code><strong>Details</strong><dl class="property-info">
 <dt>Type</dt>
 <dd>integer</dd>
 <dt>Access</dt>
@@ -781,7 +781,9 @@
 </div>
 <a id="\picoMapper\Query::limit()" class="anchor"></a><div class="method public">
 <a href="#" class="gripper"><img src="images/icons/arrow_right.png"><img src="images/icons/arrow_down.png" style="display: none;"></a><code><img src="images/icons/method.png" alt="method"><img src="images/icons/visibility_public.png" style="margin-right: 5px" alt="public"><span class="highlight">limit</span><span class="nb-faded-text">(
-          integer $limit
+          integer $limit, integer $offset
+              =
+              0
           )
         </span>
         :
@@ -798,6 +800,11 @@
 <th>$limit</th>
 <td>integer</td>
 <td><em><p>Limit value</p></em></td>
+</tr>
+<tr>
+<th>$offset</th>
+<td>integer</td>
+<td><em><p>Offset value</p></em></td>
 </tr>
 </table>
 <strong>Returns</strong><table class="argument-info">
@@ -825,7 +832,8 @@
           )
         </span>
         :
-          <a href="db_query.html#%5CpicoMapper%5CQuery">\picoMapper\Query</a></code><div class="description"><p class="short_description">Add an offset condition to the query</p></div>
+          <a href="db_query.html#%5CpicoMapper%5CQuery">\picoMapper\Query</a></code><div class="description"><p class="short_description">Add an offset condition to the query
+Work only if there is a limit value</p></div>
 <div class="code-tabs">
 <div class="long-description"></div>
 <strong>Parameters</strong><table class="argument-info">
@@ -837,7 +845,7 @@
 <tr>
 <th>$offset</th>
 <td>integer</td>
-<td><em><p>Offset</p></em></td>
+<td><em><p>Offset value</p></em></td>
 </tr>
 </table>
 <strong>Returns</strong><table class="argument-info">

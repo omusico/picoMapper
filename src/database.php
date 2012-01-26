@@ -129,5 +129,69 @@ class Database {
 
         self::$pdo = null;
     }
+
+    
+    /**
+     * Bind all parameters with the correct type
+     *
+     * @access public
+     * @static
+     * @param PDOStatement $statement PDO statement
+     * @param array $values List of parameters
+     */
+    public static function bindValues(\PDOStatement &$statement, array $values) {
+
+        for ($i = 0, $ilen = count($values); $i < $ilen; ++$i) {
+
+            if (is_int($values[$i])) {
+
+                $type = \PDO::PARAM_INT;
+            }
+            else if (is_bool($values[$i])) {
+
+                $type = \PDO::PARAM_BOOL;
+            }
+            else if (is_null($values[$i])) {
+
+                $type = \PDO::PARAM_NULL;
+            }
+            else {
+
+                $type = \PDO::PARAM_STR;
+            }
+
+            $statement->bindValue($i + 1, $values[$i], $type);
+        }
+    }
+
+    
+    /**
+     * Execute a prepared statement
+     *
+     * @access public
+     * @static
+     * @param string $sql SQL request with ? placeholders
+     * @param array $values List of parameters
+     * @return PDOStatement
+     */
+    public static function execute($sql, array $values) {
+
+        try {
+
+            $db = self::getInstance();
+
+            $rq = $db->prepare($sql);
+            
+            self::bindValues($rq, $values);
+            
+            $rq->execute();
+
+            return $rq;
+        }
+        catch (\PDOException $e) {
+
+            throw new DatabaseException($e->getMessage());
+        }
+    }
 }
 

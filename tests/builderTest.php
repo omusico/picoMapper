@@ -44,7 +44,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testInstanceofPg() {
 
-        $r = \picoMapper\BuilderFactory::getInstance('postgres');
+        $r = \picoMapper\BuilderFactory::getInstance('pgsql');
         $this->assertInstanceOf('\picoMapper\PostgresBuilder', $r);
     }
 

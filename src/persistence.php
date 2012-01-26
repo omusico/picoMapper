@@ -99,43 +99,33 @@ class Persistence {
             }
         }
 
-        try {
+        $values = $this->getValues(true);
 
-            $values = $this->getValues(true);
+        if (! empty($values)) {
 
-            if (! empty($values)) {
+            if ($this->model->$primaryKey) {
 
-                if ($this->model->$primaryKey) {
+                $sql = $this->builder->update(
+                    $this->metadata->getTable(),
+                    $this->metadata->getColumns(true),
+                    $primaryKey
+                );
 
-                    $sql = $this->builder->update(
-                        $this->metadata->getTable(),
-                        $this->metadata->getColumns(true),
-                        $primaryKey
-                    );
+                $values[] = $this->model->$primaryKey;
 
-                    $rq = $this->db->prepare($sql);
-
-                    $values[] = $this->model->$primaryKey;
-
-                    $rq->execute($values); 
-                }
-                else {
-
-                    $sql = $this->builder->insert(
-                        $this->metadata->getTable(),
-                        $this->metadata->getColumns(true)
-                    );
-
-                    $rq = $this->db->prepare($sql);
-                    $rq->execute($values);
-
-                    $this->model->$primaryKey = $this->db->lastInsertId();
-                }
+                Database::execute($sql, $values);
             }
-        }
-        catch (\PDOException $e) {
+            else {
 
-            throw new DatabaseException($e->getMessage());
+                $sql = $this->builder->insert(
+                    $this->metadata->getTable(),
+                    $this->metadata->getColumns(true)
+                );
+
+                Database::execute($sql, $values);
+
+                $this->model->$primaryKey = Database::getInstance()->lastInsertId();
+            }
         }
     }
 

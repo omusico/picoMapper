@@ -88,7 +88,7 @@ class Query {
      * @access private
      * @var integer
      */
-    private $offset = null;
+    private $offset = 0;
 
 
     /**
@@ -275,13 +275,8 @@ class Query {
 
         if ($this->limit) {
 
-            $sql .= $this->builder->addLimit();
+            $sql .= $this->builder->addLimitOffset();
             $this->parameters[] = $this->limit;
-        }
-
-        if ($this->offset) {
-
-            $sql .= $this->builder->addOffset();
             $this->parameters[] = $this->offset;
         }
 
@@ -305,11 +300,10 @@ class Query {
         $sql .= $this->jointures;
         if ($this->where) $sql .= $this->builder->addWhere($this->where);
 
-        $db = Database::getInstance();
-
-        $rq = $db->prepare($sql);
-        $rq->execute($this->parameters);
-        $row = $rq->fetch(\PDO::FETCH_ASSOC);
+        $row = Database::execute(
+                $sql,
+                $this->parameters
+            )->fetch(\PDO::FETCH_ASSOC); 
 
         if ($row !== false && isset($row['COUNT(*)'])) {
 
@@ -328,14 +322,12 @@ class Query {
      */
     public function fetchAll() {
 
-        $sql = $this->buildSelectQuery();
+        $rows = Database::execute(
+                $this->buildSelectQuery(),
+                $this->parameters
+            )->fetchAll(\PDO::FETCH_ASSOC);
 
-        $db = Database::getInstance();
 
-        $rq = $db->prepare($sql);
-        $rq->execute($this->parameters);
-        $rows = $rq->fetchAll(\PDO::FETCH_ASSOC);
-        
         $results = new Collection();
 
         if ($rows) {
@@ -360,14 +352,11 @@ class Query {
 
         $this->limit = 1;
 
-        $sql = $this->buildSelectQuery();
+        $row = Database::execute(
+                $this->buildSelectQuery(),
+                $this->parameters
+            )->fetch(\PDO::FETCH_ASSOC);
         
-        $db = Database::getInstance();
-
-        $rq = $db->prepare($sql);
-        $rq->execute($this->parameters);
-        $row = $rq->fetch(\PDO::FETCH_ASSOC);
-
         if ($row !== false) {
 
             return ResultSet::convert($this->model, $row);
@@ -398,11 +387,8 @@ class Query {
             $sql .= $this->builder->addWhere($args[0]);
             $this->parameters = array_slice($args, 1);
         }
-
-        $db = Database::getInstance();
-
-        $rq = $db->prepare($sql);
-        $rq->execute($this->parameters);
+        
+        Database::execute($sql, $this->parameters);
     }
 
 
@@ -533,11 +519,13 @@ class Query {
      *
      * @access public
      * @param integer $limit Limit value
+     * @param integer $offset Offset value
      * @return \picoMapper\Query Current instance
      */
-    public function limit($limit) {
+    public function limit($limit, $offset = 0) {
 
         if (is_numeric($limit)) $this->limit = $limit;
+        if (is_numeric($offset)) $this->offset = $offset;
 
         return $this;
     }
@@ -545,9 +533,10 @@ class Query {
 
     /**
      * Add an offset condition to the query
+     * Work only if there is a limit value
      *
      * @access public
-     * @param integer $offset Offset
+     * @param integer $offset Offset value
      * @return \picoMapper\Query Current instance
      */
     public function offset($offset) {

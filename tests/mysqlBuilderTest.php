@@ -157,19 +157,11 @@ class MysqlBuilderTest extends PHPUnit_Framework_TestCase {
     }
 
 
-    public function testLimit() {
+    public function testLimitOffset() {
 
         $builder = new \picoMapper\MysqlBuilder();
 
-        $this->assertEquals(' LIMIT ?', $builder->addLimit());
-    }
-
-
-    public function testOffset() {
-
-        $builder = new \picoMapper\MysqlBuilder();
-
-        $this->assertEquals(' OFFSET ?', $builder->addOffset());
+        $this->assertEquals(' LIMIT ? OFFSET ?', $builder->addLimitOffset());
     }
 
 

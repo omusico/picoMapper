@@ -233,26 +233,14 @@ abstract class BaseBuilder {
 
 
     /**
-     * Add a LIMIT clause for a SELECT command
+     * Add a LIMIT/OFFSET clause for a SELECT command
      *
      * @access public
      * @return string Generated SQL
      */
-    public function addLimit() {
+    public function addLimitOffset() {
 
-        return ' LIMIT ?';
-    }
-
-
-    /**
-     * Add a OFFSET clause for a SELECT command
-     *
-     * @access public
-     * @return string Generated SQL
-     */
-    public function addOffset() {
-
-        return ' OFFSET ?';
+        return ' LIMIT ? OFFSET ?';
     }
 
 

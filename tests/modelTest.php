@@ -188,8 +188,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
 
         $v = Model2::find()
             ->where('Model2.id < ?', 3)
-            ->limit(1)
-            ->offset(1)
+            ->limit(1, 1)
             ->fetchAll();
 
         $this->assertEquals(1, $v->count());
@@ -198,7 +197,6 @@ class ModelTest extends PHPUnit_Framework_TestCase {
         $v = Model2::find()
             ->where('Model2.id < ?', 3)
             ->limit(1)
-            ->offset(0)
             ->desc('id')
             ->fetchAll();
 
@@ -207,8 +205,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
 
         $v = Model2::find()
             ->where('Model2.id < ?', 3)
-            ->limit(1)
-            ->offset(1)
+            ->limit(1, 1)
             ->asc('id')
             ->fetchAll();
 
