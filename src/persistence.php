@@ -84,48 +84,71 @@ class Persistence {
      * Save the model, do an UPDATE or INSERT in the database
      *
      * @access public
+     * @param boolean $inTransaction Set to true if you are already in a transaction
      */
-    public function save() {
+    public function save($inTransaction = false) {
 
-        $primaryKey = $this->metadata->getPrimaryKey();
+        try {
 
-        foreach ($this->metadata->getBelongsToRelations() as $property => $model) {
+            $primaryKey = $this->metadata->getPrimaryKey();
 
-            if ($this->model->$property !== null) {
+            foreach ($this->metadata->getBelongsToRelations() as $property => $model) {
 
-                $metadata = MetadataStorage::get($model);
-                $value = $this->model->$property->{$metadata->getPrimaryKey()};
-                $this->model->{$this->metadata->getForeignKey($model)} = $value;
+                if ($this->model->$property !== null) {
+
+                    $metadata = MetadataStorage::get($model);
+                    $value = $this->model->$property->{$metadata->getPrimaryKey()};
+                    $this->model->{$this->metadata->getForeignKey($model)} = $value;
+                }
+            }
+
+            $values = $this->getValues(true);
+
+            if (! empty($values)) {
+
+                if (! $inTransaction) $this->db->beginTransaction();
+
+                if ($this->model->$primaryKey) {
+
+                    $sql = $this->builder->update(
+                        $this->metadata->getTable(),
+                        $this->metadata->getColumns(true),
+                        $primaryKey
+                    );
+
+                    $values[] = $this->model->$primaryKey;
+
+                    Database::execute($sql, $values);
+                }
+                else {
+
+                    $sql = $this->builder->insert(
+                        $this->metadata->getTable(),
+                        $this->metadata->getColumns(true)
+                    );
+
+                    Database::execute($sql, $values);
+
+                    $sequence = '';
+
+                    if (Database::getDriver() === 'pgsql') {
+
+                        $sequence = sprintf('%s_%s_seq',
+                            $this->metadata->getTable(),
+                            $primaryKey
+                        );
+                    }
+
+                    $this->model->$primaryKey = $this->db->lastInsertId($sequence);
+                }
+
+                if (! $inTransaction) $this->db->commit();
             }
         }
+        catch (\PDOException $e) {
 
-        $values = $this->getValues(true);
-
-        if (! empty($values)) {
-
-            if ($this->model->$primaryKey) {
-
-                $sql = $this->builder->update(
-                    $this->metadata->getTable(),
-                    $this->metadata->getColumns(true),
-                    $primaryKey
-                );
-
-                $values[] = $this->model->$primaryKey;
-
-                Database::execute($sql, $values);
-            }
-            else {
-
-                $sql = $this->builder->insert(
-                    $this->metadata->getTable(),
-                    $this->metadata->getColumns(true)
-                );
-
-                Database::execute($sql, $values);
-
-                $this->model->$primaryKey = Database::getInstance()->lastInsertId();
-            }
+            $this->db->rollback();
+            throw new DatabaseException($e->getMessage());
         }
     }
 
@@ -150,7 +173,7 @@ class Persistence {
                 if ($this->model->$property !== null) $this->model->$property->saveAll($validate, true);
             }
 
-            $this->model->save($validate);
+            $this->model->save($validate, true);
 
             foreach ($this->metadata->getHasOneRelations() as $property => $model) {
 

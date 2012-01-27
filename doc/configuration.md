@@ -14,7 +14,7 @@ Mysql
 Postgresql
 ----------
 
-    \picoMapper\Database::config('pgsql:host=localhost;port=5432;dbname=testdb;user=bruce;password=mypass');
+    \picoMapper\Database::config('pgsql:host=localhost;port=5432;dbname=testdb', 'myuser', 'mypassword');
 
 Sqlite
 ------

@@ -46,7 +46,7 @@ class SchemaTest extends PHPUnit_Framework_TestCase {
 
     public function testFetchLastVersionFromDirectory() {
 
-        $directory = sys_get_temp_dir().DIRECTORY_SEPARATOR.mktime();
+        $directory = sys_get_temp_dir().DIRECTORY_SEPARATOR.time();
         
         mkdir($directory);
         touch($directory.DIRECTORY_SEPARATOR.'20111028.php');
@@ -69,7 +69,7 @@ class SchemaTest extends PHPUnit_Framework_TestCase {
 
     public function testNoMigrationFile() {
 
-        $directory = sys_get_temp_dir().DIRECTORY_SEPARATOR.mktime();
+        $directory = sys_get_temp_dir().DIRECTORY_SEPARATOR.time();
         mkdir($directory);
         
         \picoMapper\Schema::config($directory);
@@ -83,7 +83,7 @@ class SchemaTest extends PHPUnit_Framework_TestCase {
 
     public function testProcessMigration() {
 
-        $directory = sys_get_temp_dir().DIRECTORY_SEPARATOR.mktime();
+        $directory = sys_get_temp_dir().DIRECTORY_SEPARATOR.time();
         mkdir($directory);
 
         $data = <<<'EOD'
@@ -128,7 +128,7 @@ EOD;
 
     public function testUpdate() {
 
-        $directory = sys_get_temp_dir().DIRECTORY_SEPARATOR.mktime();
+        $directory = sys_get_temp_dir().DIRECTORY_SEPARATOR.time();
         mkdir($directory);
 
         $data = <<<'EOD'

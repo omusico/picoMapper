@@ -188,8 +188,9 @@ class Model {
      *
      * @access public
      * @param boolean $validate Enable or disable the auto validation
+     * @param boolean $inTransaction True if a DB transaction is already established
      */
-    final public function save($validate = true) {
+    final public function save($validate = true, $inTransaction = false) {
 
         if ($validate === true && $this->validate() === false) {
 
@@ -199,7 +200,7 @@ class Model {
         $this->beforeSave();
 
         $p = new Persistence(get_called_class(), $this);
-        $p->save();
+        $p->save($inTransaction);
         
         $this->afterSave();
     }

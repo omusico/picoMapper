@@ -322,11 +322,22 @@ class Query {
      */
     public function fetchAll() {
 
-        $rows = Database::execute(
-                $this->buildSelectQuery(),
-                $this->parameters
-            )->fetchAll(\PDO::FETCH_ASSOC);
+        try {
 
+            Database::getInstance()->beginTransaction();
+
+            $rows = Database::execute(
+                    $this->buildSelectQuery(),
+                    $this->parameters
+                )->fetchAll(\PDO::FETCH_ASSOC);
+
+            Database::getInstance()->commit();
+        }
+        catch (\PDOException $e) {
+
+            Database::getInstance()->rollback();
+            throw new DatabaseException($e->getMessage());
+        }
 
         $results = new Collection();
 
@@ -352,11 +363,23 @@ class Query {
 
         $this->limit = 1;
 
-        $row = Database::execute(
-                $this->buildSelectQuery(),
-                $this->parameters
-            )->fetch(\PDO::FETCH_ASSOC);
-        
+        try {
+
+            Database::getInstance()->beginTransaction();
+
+            $row = Database::execute(
+                    $this->buildSelectQuery(),
+                    $this->parameters
+                )->fetch(\PDO::FETCH_ASSOC);
+    
+            Database::getInstance()->commit();
+        }
+        catch (\PDOException $e) {
+
+            Database::getInstance()->rollback();
+            throw new DatabaseException($e->getMessage());
+        } 
+
         if ($row !== false) {
 
             return ResultSet::convert($this->model, $row);
@@ -388,7 +411,17 @@ class Query {
             $this->parameters = array_slice($args, 1);
         }
         
-        Database::execute($sql, $this->parameters);
+        try {
+
+            Database::getInstance()->beginTransaction();
+            Database::execute($sql, $this->parameters);
+            Database::getInstance()->commit();
+        }
+        catch (\PDOException $e) {
+
+            Database::getInstance()->rollback();
+            throw new DatabaseException($e->getMessage());
+        }
     }
 
 
