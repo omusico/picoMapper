@@ -50,5 +50,5 @@ This is similar to the New-BSD license but compatible with the french law.
 Documentation
 -------------
 
-For more information, have a look to the `doc` directory.
+For more information, have a look to my website [http://fguillot.fr/picoMapper/](http://fguillot.fr/picoMapper/).
 

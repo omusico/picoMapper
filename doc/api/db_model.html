@@ -370,7 +370,9 @@ Get the number of records: Model::count()</p></div>
 <a href="#" class="gripper"><img src="images/icons/arrow_right.png"><img src="images/icons/arrow_down.png" style="display: none;"></a><code><img src="images/icons/method.png" alt="method"><img src="images/icons/visibility_public.png" style="margin-right: 5px" alt="public"><span class="highlight">save</span><span class="nb-faded-text">(
           boolean $validate
               =
-              true
+              true, boolean $inTransaction
+              =
+              false
           )
         </span>
         :
@@ -389,6 +391,11 @@ Get the number of records: Model::count()</p></div>
 <th>$validate</th>
 <td>boolean</td>
 <td><em><p>Enable or disable the auto validation</p></em></td>
+</tr>
+<tr>
+<th>$inTransaction</th>
+<td>boolean</td>
+<td><em><p>True if a DB transaction is already established</p></em></td>
 </tr>
 </table>
 <strong>Details</strong><dl class="function-info">
