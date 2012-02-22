@@ -54,11 +54,6 @@ picoMapper is released under the CeCILL-B free software license agreement.
 This is similar to the New-BSD license but compatible with the french law.
 
 
-API documentation
------------------
-
-<http://fguillot.fr/picoMapper/api>
-
 Manual
 ------
 
