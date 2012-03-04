@@ -1,8 +1,6 @@
 <?php
 
-if (! isset($argv[1])) die('project name missing'.PHP_EOL); 
-
-$project = $argv[1];
+$project = 'picoMapper';
 $archive = $project.'.phar';
 
 if (file_exists($archive)) {

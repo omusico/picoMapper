@@ -31,7 +31,7 @@ Requirements
 Author
 ------
 
-Frédéric Guillot: [http://fguillot.fr](http://fguillot.fr)
+Frédéric Guillot: [http://fredericguillot.com](http://fredericguillot.com)
 
 
 Source code
@@ -50,5 +50,5 @@ This is similar to the New-BSD license but compatible with the french law.
 Documentation
 -------------
 
-For more information, have a look to my website [http://fguillot.fr/picoMapper.html](http://fguillot.fr/picoMapper.html).
+For more information, have a look to my website [http://fredericguillot.com/picoMapper.html](http://fredericguillot.com/picoMapper.html).
 

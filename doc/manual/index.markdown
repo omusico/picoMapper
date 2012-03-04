@@ -38,7 +38,7 @@ Version 0.1
 Author
 ------
 
-Frédéric Guillot: <http://fguillot.fr>.
+Frédéric Guillot: <http://fredericguillot.com>.
 
 
 Source code

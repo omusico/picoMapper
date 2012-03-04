@@ -3,7 +3,7 @@
 /*
  * This file is part of picoMapper.
  *
- * (c) Frédéric Guillot http://fguillot.fr
+ * (c) Frédéric Guillot http://fredericguillot.com
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
